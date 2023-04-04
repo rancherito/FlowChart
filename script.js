@@ -154,8 +154,8 @@ const svgChart = {
     <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB">
       <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" width="1000" height="1000" @mousemove="mouseMoveEvent" ref="cajaA">
         <box-chart v-for="rect in boxs" :posX="rect.x" :posY="rect.y" />
-        <path d="M10 10 H90 A10 10 0 0 1 100 20 V90" stroke="black" fill="none" />
-        <path d="M120 50 H200 V200" stroke="black" fill="none" />  
+        <path d="M10 10 L70 10 A30 30 0 0 1 100 40 L100 120 A20 20 0 0 0 120 140 L140 140" stroke="black" fill="none" />
+        <path d="M120 50 L190 50 V200" stroke="black" fill="none" />  
       </svg>
     </div>
  </div>
