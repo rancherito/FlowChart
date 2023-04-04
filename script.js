@@ -1,3 +1,14 @@
+const { createApp } = Vue
+const app = {
+  data() {
+    return {
+      message: 'Hello Vue!'
+    }
+  }
+};
+
+createApp(app).mount('#app');
+
 const cajaA = document.getElementById('cajaA');
 const cajaB = document.getElementById('cajaB');
 
@@ -35,3 +46,24 @@ cajaB.addEventListener('mouseup', () => {
 cajaB.addEventListener('mouseleave', () => {
   arrastrando = false;
 });
+
+function crearRectangulo(x, y, width, height, fill) {
+  const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  rect.setAttribute("x", x);
+  rect.setAttribute("y", y);
+  rect.setAttribute("width", width);
+  rect.setAttribute("height", height);
+  rect.setAttribute("rx", 10);
+  rect.setAttribute("ry", 10);
+  rect.setAttribute("fill", fill);
+  return rect;
+}
+
+const rectangulo1 = crearRectangulo(50, 50, 100, 50, "blue");
+const rectangulo2 = crearRectangulo(250, 250, 100, 50, "green");
+const rectangulo3 = crearRectangulo(500, 250, 100, 50, "gray");
+
+
+cajaA.appendChild(rectangulo1);
+cajaA.appendChild(rectangulo2);
+cajaA.appendChild(rectangulo3);
