@@ -1,0 +1,27 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f2f2f2;
+}
+
+.container {
+    position: relative;
+}
+
+.box {
+    position: absolute;
+    border: 1px solid #000;
+}
+
+#boxA {
+    width: 400px;
+    height: 400px;
+}
+
+#boxB {
+    width: 300px;
+    height: 300px;
+}
