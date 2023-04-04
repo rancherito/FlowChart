@@ -153,7 +153,9 @@ const svgChart = {
     {{ desplazamientoX }}, {{ desplazamientoY }}
     <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB">
       <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" width="1000" height="1000" @mousemove="mouseMoveEvent" ref="cajaA">
-        <box-chart v-for="rect in boxs" :posX="rect.x" :posY="rect.y" />      
+        <box-chart v-for="rect in boxs" :posX="rect.x" :posY="rect.y" />
+        <path d="M10 10 H90 A10 10 0 0 1 100 20 V90" stroke="black" fill="none" />
+        <path d="M120 50 H200 V200" stroke="black" fill="none" />  
       </svg>
     </div>
  </div>
