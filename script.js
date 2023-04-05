@@ -67,8 +67,8 @@ const boxChart = {
         lines() {
             const gap = 16;
             const ele = this.parents.map(parent => {
-                const parentHeight = (parent?.height ?? 50) / 2;
-                const parentWidth = parent?.width ?? 100;
+                const parentHeight = parent.height + (parent.height);
+                const parentWidth = parent.width + (parent.width / 2);
                 const startX = 0;
                 const startY = this.height / 2;
                 const endX = parent.x - this.posX + parentWidth;
@@ -220,8 +220,8 @@ var app = createApp({
         return {
             message: 'Hello Vue!',
             boxs: [
-                { x: 700, y: 180, id: 1 },
-                { x: 800, y: 400, id: 3, parents: [1] },
+                { x: 300, y: 300, height: 50, width: 100, id: 1 },
+                { x: 800, y: 400, height: 200, width: 200, id: 3, parents: [1] },
             ]
         }
     }
