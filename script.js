@@ -87,17 +87,23 @@ const boxChart = {
                 };
 
                 console.log(state);
-                switch (state) {
+                switch (state) {                    
+                    case this.childXMenorCHildYMenor:
+
+                        if (startX - (gap * 2) > endX) {
+                            ret.d = `${startPath} L ${endX + gap} ${startY} L ${endX + gap} ${endY} ${endPath}`
+                            ret.stroke = 'yellow'
+                        }
+                        else {
+                            ret.d = `${startPath} L ${startX - gap} ${0 - gap} L ${endX + gap} ${0 - gap} ${endPath}`
+                            ret.stroke = 'PURPLE'
+                        }
+
+                        break;
                     case this.childXMenorCHildYMayor:
 
                         ret.d = `${startPath} L ${startX - gap} ${this.height + gap} L ${endX + gap} ${this.height + gap} ${endPath}`
                         ret.stroke = 'red'
-
-                        break;
-                    case this.childXMenorCHildYMenor:
-
-                        ret.d = `${startPath} L ${startX - gap} ${0 - gap} L ${endX + gap} ${0 - gap} ${endPath}`
-                        ret.stroke = 'PURPLE'
 
                         break;
                     case this.childXMayorCHildYMenor:
