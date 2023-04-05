@@ -46,8 +46,8 @@ const boxChart = {
         globalPosition: {
             handler(val) {
                 if (this.isMove) {
-                    this.modelValue.x = val.x;
-                    this.modelValue.y = val.y;
+                    this.modelValue.x = val.x - this.currentX + (this.width / 2);
+                    this.modelValue.y = val.y - this.currentY + (this.height / 2);
                     this.$emit('update:modelValue', JSON.parse(JSON.stringify(this.modelValue)));
                 }
             },
@@ -71,8 +71,10 @@ const boxChart = {
     },
     methods: {
         onDown(e) {
-            let x = e.offsetX - this.posX - (this.width / 2);
-            let y = e.offsetY - this.posY - (this.height / 2);
+            let x = e.offsetX - this.posX + (this.width / 2);
+            let y = e.offsetY - this.posY + (this.height / 2);
+            this.currentX = x;
+            this.currentY = y;
             this.isMove = true
         },
         onUp() {
@@ -82,7 +84,7 @@ const boxChart = {
     template: `
     <g :transform="styleTranslate">
         <rect @mousedown="onDown" @mouseup="onUp" @mouse class="box-chart-box" x="0" y="0" :width="width" :height="height" fill="white" rx="5" ry="5" style="stroke: black; fill: white"/>
-        <text class="box-chart-text box-chart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}} {{isMove}}</text>
+        <text class="box-chart-text box-chart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}} {{currentX}}, {{currentY}}</text>
         <rect :y="(height - 10) / 2" :x="(width - 5)" width="10" height="10" fill="gray" rx="2" ry="2"/>
     </g>
   `
@@ -124,18 +126,6 @@ const lineChart = {
             childXMayorCHildYMenor: 2,
             childXMayorCHildYMayor: 3,
             isMove: false,
-        }
-    },
-    watch: {
-        globalPosition: {
-            handler(val) {
-                if (this.isMove) {
-                    this.modelValue.x = val.x;
-                    this.modelValue.y = val.y;
-                    this.$emit('update:modelValue', JSON.parse(JSON.stringify(this.modelValue)));
-                }
-            },
-            deep: true
         }
     },
     computed: {
