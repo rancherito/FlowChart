@@ -8,8 +8,8 @@
     <style>
         #cajaB {
             position: relative;
-            width: 500px;
-            height: 400px;
+            width: 1000px;
+            height: 700px;
             border: 1px solid black;
             overflow: hidden;
         }
@@ -19,18 +19,37 @@
             background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, transparent 75%, transparent);
             background-size: 40px 40px;
         }
-        .box-chart-box{
+
+        .box-chart-box {
             stroke-width: 1;
+            z-index: 1;
         }
-        .box-chart-box:hover{
+
+        .box-chart-box:hover {
             stroke-width: 3;
         }
-        .box-chart-text{
+
+        .box-chart-text {
             font-size: 12px;
             font-family: Arial, Helvetica, sans-serif;
-            /*prevent event*/
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+        }
+
+        .box-chart-noevent {
             pointer-events: none;
-            
+        }
+
+        .box-chart-line {
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .box-chart-line:hover {
+            stroke-width: 3;
         }
     </style>
 </head>
