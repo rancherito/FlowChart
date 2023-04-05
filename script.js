@@ -163,7 +163,7 @@ const lineChart = {
                 const startPath = `M${startX} ${startY} L ${startX + gap} ${startY}`;
                 const endPath = `L ${endX - gap} ${endY} L ${endX} ${endY}`;
 
-                const childXIsMenor = (this.posX  < parent.x) + 0;
+                const childXIsMenor = (this.posX < parent.x) + 0;
                 const childYIsMenor = (this.posY < parent.y) + 0;
 
                 const state = parseInt(`${childXIsMenor}${childYIsMenor}`, 2);
@@ -189,7 +189,7 @@ const lineChart = {
 
                         if (startX > endX - (gap * 2)) {
                             ret.d = `L ${startX + gap} ${startY - (parentHeight / 2) - gap} L ${endX - gap} ${startY - (parentHeight / 2) - gap}`
-                            ret.stroke = 'orange'
+                            ret.stroke = 'TEAL'
                         } else {
                             ret.d = `L ${startX + gap} ${endY}`
                             ret.stroke = 'red'
@@ -197,15 +197,26 @@ const lineChart = {
 
                         break;
                     case this.childXMayorCHildYMenor:
+                        if (startY + ((parentHeight + this.height) / 2) + 2 * gap > endY) {
+                            ret.d = `L ${startX + gap} ${endY + (this.height / 2) + gap} L ${endX - gap} ${endY + (this.height / 2) + gap}` //paste
+                            ret.stroke = 'blue'
+                        } else {
+                            ret.d = `L ${startX + gap} ${startY + (parentHeight / 2) + gap} L ${endX - gap} ${startY + (parentHeight / 2) + gap}` //paste
+                            ret.stroke = 'cyan'
+                        }
 
-                        ret.d = `L ${startX + gap} ${startY + (parentHeight / 2) + gap} L ${endX - gap} ${startY + (parentHeight / 2) + gap}` //paste
-                        ret.stroke = 'blue'
 
                         break;
                     default:
 
-                        ret.d = `L ${startX + gap} ${startY - (parentHeight / 2) - gap} L ${endX - gap} ${startY - (parentHeight / 2) - gap}`
-                        ret.stroke = 'green'
+                        if (startY - ((parentHeight + this.height) / 2) - 2 * gap > endY) {
+                            ret.d = `L ${startX + gap} ${startY - (parentHeight / 2) - gap} L ${endX - gap} ${startY - (parentHeight / 2) - gap}`
+                            ret.stroke = 'ORANGE'
+                        }
+                        else {
+                            ret.d = `L ${startX + gap} ${endY - (this.height / 2) - gap} L ${endX - gap} ${endY - (this.height / 2) - gap}`
+                            ret.stroke = 'green'
+                        }
 
                         break;
                 }
