@@ -171,7 +171,7 @@ const lineChart = {
                 let ret = {
                     translate: `translate(${endX - 12}, ${endY - 5}) rotate(45, 5, 3.5)`
                 };
-                console.log(state)
+                
                 switch (state) {
                     case this.childXMenorCHildYMenor:
 
@@ -220,7 +220,7 @@ const lineChart = {
 
                         break;
                 }
-                //ret.stroke = 'gray'
+                ret.stroke = 'gray'
                 ret.d = `${startPath} ${ret.d} ${endPath}`
                 return ret;
 
@@ -256,13 +256,25 @@ const svgChart = {
             globalPosition: {
                 x: 0,
                 y: 0
-            }
+            },
+            viewHeight: 500,
+            viewWidth: 600,
         }
     },
     mounted() {
 
         this.cajaA = this.$refs.cajaA;
         this.cajaB = this.$refs.cajaB;
+
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                const { width, height } = entry.contentRect;
+                this.viewHeight = height;
+                this.viewWidth = width;
+            }
+        });
+
+        resizeObserver.observe(this.$el);
     },
     methods: {
         mouseDownEvent(event) {
@@ -292,14 +304,13 @@ const svgChart = {
         }
     },
     template: `
- <div>
-    {{ desplazamientoX }}, {{ desplazamientoY }}
-    <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB">
+ <div class="flowchart">
+    <div>{{viewHeight}}, {{viewWidth}}</div>
+    <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB" :style="{height: viewHeight + 'px', width: viewWidth + 'px'}">
         <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" width="2000" height="2000" @mousemove="mouseMoveEvent" ref="cajaA">
             <line-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
             <box-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
-            <path d="M10 10 L70 10 A30 30 0 0 1 100 40 L100 120 A20 20 0 0 0 120 140 L140 140" stroke="black" fill="none" />
-            <path transform="translate(10,10) rotate(90, 5, 3.5)" d="M3 0 L8 0 A2 2 0 0 1 10 2 L10 7 A2 3 0 0 1 7.5 7.5 L2.5 2.5 A3 2 0 0 1 3 0" fill="red" />
+           
         </svg>
     </div>
  </div>
@@ -312,10 +323,10 @@ var app = createApp({
         return {
             message: 'Hello Vue!',
             boxs: [
-                { x: 300, y: 300, height: 70, width: 70, id: 1 },
-                /* { x: 300, y: 500, height: 100, width: 50, id: 2 },*/
-
-                { x: 400, y: 100, height: 150, width: 200, id: 3, parents: [1, 2] },
+                { x: 300, y: 300, height: 70, width: 170, id: 1 },
+                { x: 300, y: 500, height: 100, width: 150, id: 2, parents: [4] },
+                { x: 100, y: 500, height: 100, width: 150, id: 4 },
+                { x: 600, y: 400, height: 150, width: 200, id: 3, parents: [1, 2] },
             ]
         }
     }
