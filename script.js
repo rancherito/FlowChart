@@ -38,6 +38,92 @@ const boxChart = {
             childXMayorCHildYMenor: 2,
             childXMayorCHildYMayor: 3,
             isMove: false,
+            currentX: 0,
+            currentY: 0,
+        }
+    },
+    watch: {
+        globalPosition: {
+            handler(val) {
+                if (this.isMove) {
+                    this.modelValue.x = val.x;
+                    this.modelValue.y = val.y;
+                    this.$emit('update:modelValue', JSON.parse(JSON.stringify(this.modelValue)));
+                }
+            },
+            deep: true
+        }
+    },
+    computed: {
+        posX() {
+            return this.modelValue?.x ?? 0;
+        },
+        posY() {
+            return this.modelValue?.y ?? 0;
+        },
+        styleTranslate() {
+            let x = this.posX - (this.width / 2);
+            let y = this.posY - (this.height / 2);
+            return `translate(${x}, ${y})`;
+        }
+    },
+    mounted() {
+    },
+    methods: {
+        onDown(e) {
+            let x = e.offsetX - this.posX - (this.width / 2);
+            let y = e.offsetY - this.posY - (this.height / 2);
+            this.isMove = true
+        },
+        onUp() {
+            this.isMove = false
+        }
+    },
+    template: `
+    <g :transform="styleTranslate">
+        <rect @mousedown="onDown" @mouseup="onUp" @mouse class="box-chart-box" x="0" y="0" :width="width" :height="height" fill="white" rx="5" ry="5" style="stroke: black; fill: white"/>
+        <text class="box-chart-text box-chart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}} {{isMove}}</text>
+        <rect :y="(height - 10) / 2" :x="(width - 5)" width="10" height="10" fill="gray" rx="2" ry="2"/>
+    </g>
+  `
+}
+
+const lineChart = {
+    props: {
+        parents: {
+            type: Array,
+            default: []
+        },
+        modelValue: {
+            type: Object,
+            default: {
+                id: Math.random(),
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 50
+            }
+        },
+        globalPosition: {
+            type: Object,
+            default: {
+                x: 0,
+                y: 0
+            }
+        },
+    },
+
+    emits: ['update:modelValue'],
+    data() {
+        return {
+            width: this.modelValue?.width ?? 100,
+            height: this.modelValue?.height ?? 50,
+            id: this.modelValue?.id ?? Math.random(),
+            childXMenorCHildYMenor: 0,
+            childXMenorCHildYMayor: 1,
+            childXMayorCHildYMenor: 2,
+            childXMayorCHildYMayor: 3,
+            isMove: false,
         }
     },
     watch: {
@@ -67,85 +153,76 @@ const boxChart = {
         lines() {
             const gap = 16;
             const ele = this.parents.map(parent => {
-                const parentHeight = parent.height + (parent.height);
-                const parentWidth = parent.width + (parent.width / 2);
-                const startX = 0;
-                const startY = this.height / 2;
-                const endX = parent.x - this.posX + parentWidth;
-                const endY = parent.y - this.posY + parentHeight;
+                const parentHeight = parent.height;
+                const parentWidth = parent.width;
+                const endX = this.posX - (this.width / 2);
+                const endY = this.posY;
+                const startX = parent.x + (parentWidth / 2);
+                const startY = parent.y;
 
-                const startPath = `M${startX} ${startY} L ${startX - gap} ${startY}`;
-                const endPath = `L ${endX + gap} ${endY} L ${endX} ${endY}`;
+                const startPath = `M${startX} ${startY} L ${startX + gap} ${startY}`;
+                const endPath = `L ${endX - gap} ${endY} L ${endX} ${endY}`;
 
-                const childXIsMenor = (this.posX + (this.width / 2) < parent.x + (parentWidth / 2)) + 0;
-                const childYIsMenor = (this.posY + (this.height / 2) < parent.y + (parentHeight / 2)) + 0;
+                const childXIsMenor = (this.posX  < parent.x) + 0;
+                const childYIsMenor = (this.posY < parent.y) + 0;
 
                 const state = parseInt(`${childXIsMenor}${childYIsMenor}`, 2);
 
                 let ret = {
-                    translate: `translate(${startX - 5}, ${startY - 5}) rotate(45, 5, 3.5)`
+                    translate: `translate(${endX - 12}, ${endY - 5}) rotate(45, 5, 3.5)`
                 };
-
-                console.log(state);
-                switch (state) {                    
+                console.log(state)
+                switch (state) {
                     case this.childXMenorCHildYMenor:
 
-                        if (startX - (gap * 2) > endX) {
-                            ret.d = `${startPath} L ${endX + gap} ${startY} L ${endX + gap} ${endY} ${endPath}`
+                        if (startX > endX - (gap * 2)) {
+                            ret.d = `L ${startX + gap} ${startY + (parentHeight / 2) + gap} L ${endX - gap} ${startY + (parentHeight / 2) + gap}`
                             ret.stroke = 'yellow'
                         }
                         else {
-                            ret.d = `${startPath} L ${startX - gap} ${0 - gap} L ${endX + gap} ${0 - gap} ${endPath}`
-                            ret.stroke = 'PURPLE'
+                            ret.d = `L ${startX + gap} ${endY}`
+                            ret.stroke = 'purple'
                         }
 
                         break;
                     case this.childXMenorCHildYMayor:
 
-                        ret.d = `${startPath} L ${startX - gap} ${this.height + gap} L ${endX + gap} ${this.height + gap} ${endPath}`
-                        ret.stroke = 'red'
+                        if (startX > endX - (gap * 2)) {
+                            ret.d = `L ${startX + gap} ${startY - (parentHeight / 2) - gap} L ${endX - gap} ${startY - (parentHeight / 2) - gap}`
+                            ret.stroke = 'orange'
+                        } else {
+                            ret.d = `L ${startX + gap} ${endY}`
+                            ret.stroke = 'red'
+                        }
 
                         break;
                     case this.childXMayorCHildYMenor:
 
-                        ret.d = `${startPath} L ${startX - gap} ${0 - gap} L ${endX + gap} ${0 - gap} ${endPath}`
+                        ret.d = `L ${startX + gap} ${startY + (parentHeight / 2) + gap} L ${endX - gap} ${startY + (parentHeight / 2) + gap}` //paste
                         ret.stroke = 'blue'
 
                         break;
                     default:
 
-                        ret.d = `${startPath} L ${startX - gap} ${this.height + gap} L ${endX + gap} ${this.height + gap} ${endPath}`
+                        ret.d = `L ${startX + gap} ${startY - (parentHeight / 2) - gap} L ${endX - gap} ${startY - (parentHeight / 2) - gap}`
                         ret.stroke = 'green'
 
                         break;
                 }
+                //ret.stroke = 'gray'
+                ret.d = `${startPath} ${ret.d} ${endPath}`
                 return ret;
 
             });
             return ele;
         }
     },
-    mounted() {
-    },
-    methods: {
-        onDown() {
-            console.log('onDown');
-            this.isMove = true
-        },
-        onUp() {
-            console.log('onUp');
-            this.isMove = false
-        }
-    },
     template: `
-    <g :transform="styleTranslate">
-        <rect @mousedown="onDown" @mouseup="onUp" @mouse class="box-chart-box" x="0" y="0" :width="width" :height="height" fill="white" rx="5" ry="5" style="stroke: black; fill: white"/>
-        <text class="box-chart-text box-chart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}} {{isMove}}</text>
+    <g>
         <template v-for="line in lines">
             <path class="box-chart-line" :d="line.d" :stroke="line.stroke"/>
             <path :transform="line.translate" d="M3 0 L8 0 A2 2 0 0 1 10 2 L10 7 A2 3 0 0 1 7.5 7.5 L2.5 2.5 A3 2 0 0 1 3 0" fill="GRAY" />            
         </template>
-        <rect :y="(height - 10) / 2" :x="(width - 5)" width="10" height="10" fill="gray" rx="2" ry="2"/>
     </g>
   `
 }
@@ -208,14 +285,12 @@ const svgChart = {
     {{ desplazamientoX }}, {{ desplazamientoY }}
     <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB">
         <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" width="2000" height="2000" @mousemove="mouseMoveEvent" ref="cajaA">
+            <line-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
             <box-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
             <path d="M10 10 L70 10 A30 30 0 0 1 100 40 L100 120 A20 20 0 0 0 120 140 L140 140" stroke="black" fill="none" />
             <path transform="translate(10,10) rotate(90, 5, 3.5)" d="M3 0 L8 0 A2 2 0 0 1 10 2 L10 7 A2 3 0 0 1 7.5 7.5 L2.5 2.5 A3 2 0 0 1 3 0" fill="red" />
-            
-
         </svg>
     </div>
-    <ul><li v-for="rect in boxs">{{rect.x}}, {{rect.y}}</li></ul>
  </div>
   `
 }
@@ -226,12 +301,16 @@ var app = createApp({
         return {
             message: 'Hello Vue!',
             boxs: [
-                { x: 300, y: 300, height: 50, width: 100, id: 1 },
-                { x: 800, y: 400, height: 200, width: 200, id: 3, parents: [1] },
+                { x: 300, y: 300, height: 70, width: 70, id: 1 },
+                /* { x: 300, y: 500, height: 100, width: 50, id: 2 },*/
+
+                { x: 400, y: 100, height: 150, width: 200, id: 3, parents: [1, 2] },
             ]
         }
     }
 })
 app.component('svg-chart', svgChart);
 app.component('box-chart', boxChart);
+app.component('line-chart', lineChart);
+
 app.mount('#app');
