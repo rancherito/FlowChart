@@ -84,7 +84,7 @@ const boxChart = {
     template: `
     <g :transform="styleTranslate">
         <rect @mousedown="onDown" @mouseup="onUp" @mouse class="box-chart-box" x="0" y="0" :width="width" :height="height" fill="white" rx="5" ry="5" style="stroke: black; fill: white"/>
-        <text class="box-chart-text box-chart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}} {{currentX}}, {{currentY}}</text>
+        <text class="box-chart-text box-chart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}}</text>
         <rect :y="(height - 10) / 2" :x="(width - 5)" width="10" height="10" fill="gray" rx="2" ry="2"/>
     </g>
   `
@@ -161,7 +161,7 @@ const lineChart = {
                 let ret = {
                     translate: `translate(${endX - 12}, ${endY - 5}) rotate(45, 5, 3.5)`
                 };
-                
+
                 switch (state) {
                     case this.childXMenorCHildYMenor:
 
@@ -266,6 +266,19 @@ const svgChart = {
 
         resizeObserver.observe(this.$el);
     },
+    computed: {
+        maxPosition() {
+            
+            const maxX = this.boxs.reduce((acc, box) => {
+                return acc > box.x + box.width ? acc : box.x + box.width;
+            }, 0);
+            const maxY = this.boxs.reduce((acc, box) => {
+                return acc > box.y + box.height ? acc : box.y + box.height;
+            }, 0);
+
+            return { x: maxX, y: maxY }
+        }
+    },
     methods: {
         mouseDownEvent(event) {
             if (event.target.id != 'cajaA') return
@@ -295,9 +308,9 @@ const svgChart = {
     },
     template: `
  <div class="flowchart">
-    <div>{{viewHeight}}, {{viewWidth}}</div>
+    <div>{{maxPosition}}</div>
     <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB" :style="{height: viewHeight + 'px', width: viewWidth + 'px'}">
-        <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" width="2000" height="2000" @mousemove="mouseMoveEvent" ref="cajaA">
+        <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" :width="maxPosition.x" :height="maxPosition.y" @mousemove="mouseMoveEvent" ref="cajaA">
             <line-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
             <box-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
            
@@ -315,7 +328,7 @@ var app = createApp({
             boxs: [
                 { x: 300, y: 300, height: 70, width: 170, id: 1 },
                 { x: 300, y: 500, height: 100, width: 150, id: 2, parents: [4] },
-                { x: 100, y: 500, height: 100, width: 150, id: 4 },
+                { x: 100, y: 700, height: 100, width: 150, id: 4 },
                 { x: 600, y: 400, height: 150, width: 200, id: 3, parents: [1, 2] },
             ]
         }
