@@ -126,6 +126,16 @@ const lineChart = {
             childXMayorCHildYMenor: 2,
             childXMayorCHildYMayor: 3,
             isMove: false,
+            colors: {
+                purple: '#673AB7',
+                indigo: '#3F51B5',
+                blue: '#2196F3',
+                teal: '#009688',
+                green: '#4CAF50',
+                lime: '#CDDC39',
+                amber: '#FFC107',
+                deepOrange: '#FF5722'
+            }
         }
     },
     computed: {
@@ -143,6 +153,7 @@ const lineChart = {
         lines() {
             const gap = 16;
             const ele = this.parents.map(parent => {
+                let points = [];
                 const parentHeight = parent.height;
                 const parentWidth = parent.width;
                 const endX = this.posX - (this.width / 2);
@@ -150,7 +161,10 @@ const lineChart = {
                 const startX = parent.x + (parentWidth / 2);
                 const startY = parent.y;
 
-                const startPath = `M${startX} ${startY} L ${startX + gap} ${startY}`;
+                points.push([startX, startY]);
+                points.push([startX + gap, startY]);
+
+                const startPath = `M ${startX} ${startY} L ${startX + gap} ${startY}`;
                 const endPath = `L ${endX - gap} ${endY} L ${endX} ${endY}`;
 
                 const childXIsMenor = (this.posX < parent.x) + 0;
@@ -166,52 +180,63 @@ const lineChart = {
                     case this.childXMenorCHildYMenor:
 
                         if (startX > endX - (gap * 2)) {
-                            ret.d = `L ${startX + gap} ${startY + (parentHeight / 2) + gap} L ${endX - gap} ${startY + (parentHeight / 2) + gap}`
-                            ret.stroke = 'yellow'
+                            points.push([startX + gap, startY + (parentHeight / 2) + gap]);
+                            points.push([endX - gap, startY + (parentHeight / 2) + gap]);
+                            ret.stroke = this.colors.purple
                         }
                         else {
-                            ret.d = `L ${startX + gap} ${endY}`
-                            ret.stroke = 'purple'
+                            points.push([startX + gap, endY]);
+                            ret.stroke = this.colors.indigo
                         }
 
                         break;
                     case this.childXMenorCHildYMayor:
 
                         if (startX > endX - (gap * 2)) {
-                            ret.d = `L ${startX + gap} ${startY - (parentHeight / 2) - gap} L ${endX - gap} ${startY - (parentHeight / 2) - gap}`
-                            ret.stroke = 'TEAL'
+                            points.push([startX + gap, startY - (parentHeight / 2) - gap]);
+                            points.push([endX - gap, startY - (parentHeight / 2) - gap]);
+                            ret.stroke = this.colors.blue
                         } else {
-                            ret.d = `L ${startX + gap} ${endY}`
-                            ret.stroke = 'red'
+                            points.push([startX + gap, endY]);
+                            ret.stroke = this.colors.teal
                         }
 
                         break;
                     case this.childXMayorCHildYMenor:
                         if (startY + ((parentHeight + this.height) / 2) + 2 * gap > endY) {
-                            ret.d = `L ${startX + gap} ${endY + (this.height / 2) + gap} L ${endX - gap} ${endY + (this.height / 2) + gap}` //paste
-                            ret.stroke = 'blue'
+                            points.push([startX + gap, endY + (this.height / 2) + gap]);
+                            points.push([endX - gap, endY + (this.height / 2) + gap]);
+                            ret.stroke = this.colors.green
                         } else {
-                            ret.d = `L ${startX + gap} ${startY + (parentHeight / 2) + gap} L ${endX - gap} ${startY + (parentHeight / 2) + gap}` //paste
-                            ret.stroke = 'cyan'
+                            points.push([startX + gap, startY + (parentHeight / 2) + gap]);
+                            points.push([endX - gap, startY + (parentHeight / 2) + gap]);
+                            ret.stroke = this.colors.lime
                         }
-
-
                         break;
                     default:
 
                         if (startY - ((parentHeight + this.height) / 2) - 2 * gap > endY) {
-                            ret.d = `L ${startX + gap} ${startY - (parentHeight / 2) - gap} L ${endX - gap} ${startY - (parentHeight / 2) - gap}`
-                            ret.stroke = 'ORANGE'
+                            points.push([startX + gap, startY - (parentHeight / 2) - gap]);
+                            points.push([endX - gap, startY - (parentHeight / 2) - gap]);
+
+                            ret.stroke = this.colors.amber
                         }
                         else {
-                            ret.d = `L ${startX + gap} ${endY - (this.height / 2) - gap} L ${endX - gap} ${endY - (this.height / 2) - gap}`
-                            ret.stroke = 'green'
+                            points.push([startX + gap, endY - (this.height / 2) - gap]);
+                            points.push([endX - gap, endY - (this.height / 2) - gap]);
+                            ret.stroke = this.colors.deepOrange
                         }
 
                         break;
                 }
-                ret.stroke = 'gray'
-                ret.d = `${startPath} ${ret.d} ${endPath}`
+                //ret.stroke = 'gray'
+
+                points.push([endX - gap, endY]);
+                points.push([endX, endY]);
+
+                ret.d = points.map((point, index) => {
+                    return `${index === 0 ? 'M' : 'L'} ${point[0]} ${point[1]}`
+                }).join(' ');
                 return ret;
 
             });
@@ -268,7 +293,7 @@ const svgChart = {
     },
     computed: {
         maxPosition() {
-            
+
             const maxX = this.boxs.reduce((acc, box) => {
                 return acc > box.x + box.width ? acc : box.x + box.width;
             }, 0);
@@ -308,7 +333,6 @@ const svgChart = {
     },
     template: `
  <div class="flowchart">
-    <div>{{maxPosition}}</div>
     <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB" :style="{height: viewHeight + 'px', width: viewWidth + 'px'}">
         <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" :width="maxPosition.x" :height="maxPosition.y" @mousemove="mouseMoveEvent" ref="cajaA">
             <line-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
@@ -327,9 +351,7 @@ var app = createApp({
             message: 'Hello Vue!',
             boxs: [
                 { x: 300, y: 300, height: 70, width: 170, id: 1 },
-                { x: 300, y: 500, height: 100, width: 150, id: 2, parents: [4] },
-                { x: 100, y: 700, height: 100, width: 150, id: 4 },
-                { x: 600, y: 400, height: 150, width: 200, id: 3, parents: [1, 2] },
+                { x: 600, y: 400, height: 150, width: 200, id: 3, parents: [1] },
             ]
         }
     },
