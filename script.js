@@ -83,8 +83,8 @@ const boxChart = {
     },
     template: `
     <g :transform="styleTranslate">
-        <rect @mousedown="onDown" @mouseup="onUp" @mouse class="box-chart-box" x="0" y="0" :width="width" :height="height" fill="white" rx="5" ry="5" style="stroke: black; fill: white"/>
-        <text class="box-chart-text box-chart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}}</text>
+        <rect @mousedown="onDown" @mouseup="onUp" @mouse class="flowchart-box" x="0" y="0" :width="width" :height="height" fill="white" rx="5" ry="5" style="stroke: black; fill: white"/>
+        <text class="flowchart-text flowchart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}}</text>
         <rect :y="(height - 10) / 2" :x="(width - 5)" width="10" height="10" fill="gray" rx="2" ry="2"/>
     </g>
   `
@@ -221,7 +221,7 @@ const lineChart = {
     template: `
     <g>
         <template v-for="line in lines">
-            <path class="box-chart-line" :d="line.d" :stroke="line.stroke"/>
+            <path class="flowchart-line" :d="line.d" :stroke="line.stroke"/>
             <path :transform="line.translate" d="M3 0 L8 0 A2 2 0 0 1 10 2 L10 7 A2 3 0 0 1 7.5 7.5 L2.5 2.5 A3 2 0 0 1 3 0" fill="GRAY" />            
         </template>
     </g>
@@ -312,7 +312,7 @@ const svgChart = {
     <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB" :style="{height: viewHeight + 'px', width: viewWidth + 'px'}">
         <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" :width="maxPosition.x" :height="maxPosition.y" @mousemove="mouseMoveEvent" ref="cajaA">
             <line-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
-            <box-chart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
+            <flowchart v-for="rect in boxs" :globalPosition="globalPosition" v-model="rect" :parents="boxs.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
            
         </svg>
     </div>
@@ -332,10 +332,27 @@ var app = createApp({
                 { x: 600, y: 400, height: 150, width: 200, id: 3, parents: [1, 2] },
             ]
         }
+    },
+    mounted() {
+        //read boxs from localstorage and set it to boxs if exists
+        const boxs = localStorage.getItem('boxs');
+        if (boxs) {
+            this.boxs = JSON.parse(boxs);
+        }
+    },
+    //watch boxs and save it to localstorage
+    watch: {
+        boxs: {
+            handler: function (val) {
+                localStorage.setItem('boxs', JSON.stringify(val));
+            },
+            deep: true
+        }
     }
+
 })
 app.component('svg-chart', svgChart);
-app.component('box-chart', boxChart);
+app.component('flowchart', boxChart);
 app.component('line-chart', lineChart);
 
 app.mount('#app');
