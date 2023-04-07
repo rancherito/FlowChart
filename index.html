@@ -18,7 +18,6 @@
 
         .flowchart-box {
             stroke-width: 1;
-            z-index: 1;
         }
 
         .flowchart-box:hover {
@@ -47,6 +46,7 @@
         .flowchart-line:hover {
             stroke-width: 3;
         }
+
         .flowchart {
             position: relative;
             width: 100%;
@@ -60,10 +60,49 @@
 
 <body>
     <div id="app" style="height: 600px;">
-        <svg-chart :boxs="boxs"></svg-chart>
+        <svg-chart v-model="boxs"></svg-chart>
     </div>
     <script src="vue.global.prod.js"></script>
     <script src="script.js"></script>
+    <script>
+        function doSquaresIntersect(squareA, squareB) {
+            const rectA = {
+                x: squareA[0][0],
+                y: squareA[0][1],
+                width: squareA[2][0] - squareA[0][0],
+                height: squareA[2][1] - squareA[0][1],
+            };
+
+            const rectB = {
+                x: squareB[0][0],
+                y: squareB[0][1],
+                width: squareB[2][0] - squareB[0][0],
+                height: squareB[2][1] - squareB[0][1],
+            };
+
+            return (
+                rectA.x < rectB.x + rectB.width &&
+                rectA.x + rectA.width > rectB.x &&
+                rectA.y < rectB.y + rectB.height &&
+                rectA.y + rectA.height > rectB.y
+            );
+        }
+        var cuadradoA = [[4, 4], [100, 4], [100, 100], [4, 100]];
+        var cuadradoB = [[20, 20], [200, 20], [200, 200], [20, 200]];
+        console.log(doSquaresIntersect(cuadradoA, cuadradoB));
+
+
+
+
+
+
+
+
+
+
+
+        
+    </script>
 </body>
 
 </html>
