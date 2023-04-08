@@ -15,7 +15,7 @@ const boxChart = {
                 y: 0,
                 width: 100,
                 height: 50,
-                color: 'blue'
+                text: 'Lorem'
             }
         },
         globalPosition: {
@@ -33,6 +33,7 @@ const boxChart = {
             width: this.modelValue?.width ?? 100,
             height: this.modelValue?.height ?? 50,
             id: this.modelValue?.id ?? Math.random(),
+            text: this.modelValue?.text ?? 'Lorem',
             childXMenorCHildYMenor: 0,
             childXMenorCHildYMayor: 1,
             childXMayorCHildYMenor: 2,
@@ -68,6 +69,7 @@ const boxChart = {
         }
     },
     mounted() {
+        console.log(this.modelValue?.text);
     },
     methods: {
         onDown(e) {
@@ -84,7 +86,7 @@ const boxChart = {
     template: `
     <g :transform="styleTranslate">
         <rect @mousedown="onDown" @mouseup="onUp" @mouse class="flowchart-box" x="0" y="0" :width="width" :height="height" fill="white" rx="5" ry="5" style="stroke: black; fill: white"/>
-        <text class="flowchart-text flowchart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{'BOX ' + id}}</text>
+        <text class="flowchart-text flowchart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{text}}-{{modelValue?.parents}}</text>
     </g>
   `
 }
@@ -302,8 +304,6 @@ const lineChart = {
                         const horary = this.horary(pA[0], pA[1], pC[0], pC[1])
 
                         if (horary.isRotate) {
-                            console.log(horary)
-
                             if (angle1 == this.toTop) pointsWidthoutCorner.push([pB[0], pB[1] + customGap])
                             if (angle1 == this.toBottom) pointsWidthoutCorner.push([pB[0], pB[1] - customGap])
                             if (angle1 == this.toLeft) pointsWidthoutCorner.push([pB[0] + customGap, pB[1]])
@@ -328,7 +328,6 @@ const lineChart = {
                                 cornet.y = pB[1]
                             }
 
-                            console.log(angle1, angle2)
                             if (
                                 angle1 == this.toRigth && angle2 == this.toTop ||
                                 angle1 == this.toTop && angle2 == this.toLeft ||
@@ -353,7 +352,6 @@ const lineChart = {
 
                 lineDirection.d2 = pointsWidthoutCorner.map((point, index) => {
                     if (Array.isArray(point)) return `${index === 0 ? 'M' : 'L'} ${point[0]} ${point[1]}`
-                    console.log(point)
                     return `A ${point.r} ${point.r} 0 0 ${point.isHorary ? 1 : 0} ${point.x} ${point.y}`
                 }).join(' ');
 
@@ -405,9 +403,9 @@ const svgChart = {
         }
     },
     beforeMount() {
-        this.modelValue.sort((a, b) => {
+        /*this.modelValue.sort((a, b) => {
             return (a.width * a.height) < (b.width * b.height) ? 1 : -1;
-        })
+        })*/
     },
     mounted() {
 
@@ -421,13 +419,40 @@ const svgChart = {
                 this.viewWidth = width;
             }
         });
-
-
-        //this.$emit('update:modelValue', JSON.parse(JSON.stringify(this.modelValue)));
-
         resizeObserver.observe(this.$el);
+        //execute after 2 seconds
+        setTimeout(() => {
+            this.smartOrganizer();
+        }, 500);
     },
     methods: {
+        smartOrganizer() {
+            console.log('boxs', this.modelValue)
+
+            //clone modelvalue and print
+            const boxes = this.modelValue.map(box => {
+                return { ...box }
+            });
+            //find all boxs widthout parent
+            const boxWidthoutParent = boxes.filter(box => box?.parents == undefined || box?.parents?.length == 0);
+            //filter all boxs with parent
+            //const boxWithParent = boxes.filter(box => Array.isArray(box?.parents) && box.parents.length > 0);
+            const aa = JSON.parse(JSON.stringify(boxWidthoutParent));
+            console.log('aa', aa)
+
+            //separa las cajas de boxWidthoutParent con un margen de 100px en el eje x
+            let x = 100;
+            aa.forEach(box => {
+                box.x = x;
+                box.y = 100;
+                x += box.width + 40;
+            })
+            console.log('boxWidthoutParent', boxWidthoutParent)
+
+            //update modelvalue [...boxWidthoutParent, ...boxWithParent];
+            this.$emit('update:modelValue', aa);
+            //console.log(boxWidthoutParent)
+        },
         maxY() {
             return this.modelValue.reduce((acc, box) => {
                 return acc > box.y + box.height ? acc : box.y + box.height;
@@ -468,8 +493,8 @@ const svgChart = {
  <div class="flowchart">
     <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB" :style="{height: viewHeight + 'px', width: viewWidth + 'px'}">
         <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" :width="maxX()" :height="maxY()" @mousemove="mouseMoveEvent" ref="cajaA">
-            <line-chart v-for="rect in modelValue" :globalPosition="globalPosition" v-model="rect" :parents="modelValue.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
-            <box-chart v-for="rect in modelValue" :globalPosition="globalPosition" v-model="rect" :parents="modelValue.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
+            <line-chart v-for="rect in modelValue" :key="rect.id" :globalPosition="globalPosition" v-model="rect" :parents="modelValue.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
+            <box-chart v-for="rect in modelValue" :key="rect.id" :globalPosition="globalPosition" v-model="rect" :parents="modelValue.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
            
         </svg>
     </div>
@@ -481,18 +506,21 @@ const svgChart = {
 var app = createApp({
     data() {
         return {
-            boxs: [
-                { x: 4, y: 4, width: 96, height: 96, id: 1 },
-                { x: 20, y: 20, width: 180, height: 180, id: 2, parents: [1] },
-
-            ]
+            boxs: []
         }
     },
     beforeMount() {
+
+
         const boxs = localStorage.getItem('boxs');
         if (boxs) {
-            this.boxs = JSON.parse(boxs);
+            //this.boxs = JSON.parse(boxs);
         }
+    },
+    mounted() {
+        fetch('json2.json').then(res => res.json()).then(data => {
+            this.boxs = data;
+        })
     },
     watch: {
         boxs: {
