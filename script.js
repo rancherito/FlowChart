@@ -403,9 +403,9 @@ const svgChart = {
         }
     },
     beforeMount() {
-        /*this.modelValue.sort((a, b) => {
+        this.modelValue.sort((a, b) => {
             return (a.width * a.height) < (b.width * b.height) ? 1 : -1;
-        })*/
+        })
     },
     mounted() {
 
@@ -423,45 +423,56 @@ const svgChart = {
         //execute after 2 seconds
         setTimeout(() => {
             this.smartOrganizer();
-        }, 500);
+        }, 200);
     },
     methods: {
         smartOrganizer() {
-            console.log('boxs', this.modelValue)
+            // Clonar modelValue y agregar sublevel
+            const boxes = this.modelValue.map(box => ({ ...box, sublevel: 0 }));
 
-            //clone modelvalue and print
-            const boxes = this.modelValue.map(box => {
-                return { ...box }
+            // Calcular subniveles
+            boxes.forEach(parentBox => {
+                boxes
+                    .filter(childBox => childBox?.parents?.includes(parentBox.id))
+                    .forEach(childBox => {
+                        childBox.sublevel = parentBox.sublevel + 1;
+                    });
             });
-            //find all boxs widthout parent
-            const boxWidthoutParent = boxes.filter(box => box?.parents == undefined || box?.parents?.length == 0);
-            //filter all boxs with parent
-            //const boxWithParent = boxes.filter(box => Array.isArray(box?.parents) && box.parents.length > 0);
-            const aa = JSON.parse(JSON.stringify(boxWidthoutParent));
-            console.log('aa', aa)
 
-            //separa las cajas de boxWidthoutParent con un margen de 100px en el eje x
-            let x = 100;
-            aa.forEach(box => {
-                box.x = x;
-                box.y = 100;
-                x += box.width + 40;
-            })
-            console.log('boxWidthoutParent', boxWidthoutParent)
+            // Obtener subnivel máximo
+            const maxSublevel = Math.max(...boxes.map(box => box.sublevel));
 
-            //update modelvalue [...boxWidthoutParent, ...boxWithParent];
-            this.$emit('update:modelValue', aa);
-            //console.log(boxWidthoutParent)
+            // Actualizar coordenadas x e y
+            for (let i = 0; i <= maxSublevel; i++) {
+                let x = 100;
+                boxes
+                    .filter(box => box.sublevel === i)
+                    .forEach(box => {
+                        box.y = i * 200 + 100;
+                        if (i === 0) {
+                            box.x = x;
+                            x += box.width + 40;
+                        } else {
+                            const parent = boxes.find(parentBox => parentBox.id === box.parents[0]);
+                            box.x = parent.x + parent.width / 2 - box.width / 2;
+                        }
+                    });
+            }
+
+            // Emitir evento de actualización
+            this.$emit("update:modelValue", boxes);
         },
         maxY() {
-            return this.modelValue.reduce((acc, box) => {
+            const maxHeight = this.modelValue.reduce((acc, box) => {
                 return acc > box.y + box.height ? acc : box.y + box.height;
             }, 0);
+            return maxHeight > this.viewHeight ? maxHeight : this.viewHeight;
         },
         maxX() {
-            return this.modelValue.reduce((acc, box) => {
+            const maxWidth = this.modelValue.reduce((acc, box) => {
                 return acc > box.x + box.width ? acc : box.x + box.width;
             }, 0);
+            return maxWidth > this.viewWidth ? maxWidth : this.viewWidth;
         },
         mouseDownEvent(event) {
             if (event.target.id != 'cajaA') return
@@ -498,7 +509,6 @@ const svgChart = {
            
         </svg>
     </div>
-    <ul><li v-for="rect in modelValue">{{rect.id}}</li></ul>
  </div>
   `
 }
