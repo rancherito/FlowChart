@@ -141,7 +141,10 @@
         "height": 96,
         "text": "Probabilidad y Estadística",
         "id": 14,
-        "level": 2
+        "level": 2,
+        "parents": [
+            8
+        ]
     },
     {
         "x": 36,
@@ -151,7 +154,7 @@
         "text": "Física III",
         "id": 15,
         "parents": [
-            9
+             7
         ],
         "level": 2
     },
