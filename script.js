@@ -3,10 +3,6 @@ const { createApp } = Vue
 
 const boxChart = {
     props: {
-        parents: {
-            type: Array,
-            default: []
-        },
         modelValue: {
             type: Object,
             default: {
@@ -78,22 +74,30 @@ const boxChart = {
         },
         onUp() {
             this.isMove = false
+        },
+        splitText(phrase) {
+            const words = phrase.split(" ");
+            const result = [];
+
+            for (let i = 0; i < words.length; i += 3) {
+                result.push(words.slice(i, i + 3).join(" "));
+            }
+
+            return result;
         }
     },
     template: `
     <g :transform="styleTranslate">
         <rect @mousedown="onDown" @mouseup="onUp" @mouse class="flowchart-box" x="0" y="0" :width="width" :height="height" fill="white" rx="5" ry="5" style="stroke: black; fill: white"/>
-        <text class="flowchart-text flowchart-noevent" :x="width / 2" :y="height / 2" text-anchor="middle" alignment-baseline="central">{{text}}-{{modelValue?.parents}}</text>
+        <text class="flowchart-text flowchart-noevent" :x="0" :y="0" :transform="'translate(' + width / 2 + ',10)'" text-anchor="middle" alignment-baseline="central">
+        <tspan v-for="line in splitText(text)" x="0" dy="1rem">{{line}}</tspan>
+        </text>
     </g>
   `
 }
 
 const lineChart = {
     props: {
-        parents: {
-            type: Array,
-            default: []
-        },
         modelValue: {
             type: Object,
             default: {
@@ -101,8 +105,13 @@ const lineChart = {
                 x: 0,
                 y: 0,
                 width: 100,
-                height: 50
+                height: 50,
+                parents: [],
             }
+        },
+        mod: {
+            type: Array,
+            default: []
         },
         globalPosition: {
             type: Object,
@@ -119,6 +128,7 @@ const lineChart = {
             width: this.modelValue?.width ?? 100,
             height: this.modelValue?.height ?? 50,
             id: this.modelValue?.id ?? Math.random(),
+            parentList: this.modelValue?.parents ?? [],
             left: 0,
             top: 1,
             rigth: 2,
@@ -138,6 +148,7 @@ const lineChart = {
             toBottom: 'Bottom',
             toLeft: 'Left',
             toRigth: 'Rigth',
+            lines: []
         }
     },
     mounted() {
@@ -184,22 +195,12 @@ const lineChart = {
         distance2Points(x1, y1, x2, y2) {
             return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         },
-    },
-    computed: {
-        posX() {
-            return this.modelValue?.x ?? 0;
-        },
-        posY() {
-            return this.modelValue?.y ?? 0;
-        },
-        styleTranslate() {
-            let x = this.posX - (this.width / 2);
-            let y = this.posY - (this.height / 2);
-            return `translate(${x}, ${y})`;
-        },
-        lines() {
+
+        linesCalcule() {
+
+            const aa = this.mod.filter(x => this.parentList.includes(x.id))
             const gap = 16;
-            const ele = this.parents.map(parent => {
+            const ele = aa.map(parent => {
                 let points = [];
                 let finalPoints = [];
                 let isStartA = true;
@@ -362,9 +363,33 @@ const lineChart = {
             return ele;
         }
     },
+    watch: {
+        modelValue: {
+            handler: function (val, oldVal) {
+                console.log('modelValue');
+
+            },
+            deep: true
+        }
+
+    }
+    ,
+    computed: {
+        posX() {
+            return this.modelValue?.x ?? 0;
+        },
+        posY() {
+            return this.modelValue?.y ?? 0;
+        },
+        styleTranslate() {
+            let x = this.posX - (this.width / 2);
+            let y = this.posY - (this.height / 2);
+            return `translate(${x}, ${y})`;
+        }
+    },
     template: `
     <g>
-        <template v-for="line in lines">
+        <template v-for="line in linesCalcule()">
             <path class="flowchart-line" :d="line.d2" stroke="purple"/>
             <path :transform="line.translate" d="M3 0 L8 0 A2 2 0 0 1 10 2 L10 7 A2 3 0 0 1 7.5 7.5 L2.5 2.5 A3 2 0 0 1 3 0" fill="GRAY" />
             <rect :y="line.start[1]-6" :x="line.start[0]-6" width="12" height="12" fill="gray" rx="2" ry="2"/>
@@ -397,16 +422,17 @@ const svgChart = {
             },
             viewHeight: 500,
             viewWidth: 600,
+            counter: 0,
         }
     },
     beforeMount() {
         this.modelValue.sort((a, b) => {
             return (a.width * a.height) < (b.width * b.height) ? 1 : -1;
         })
-
+        const boxes = this.modelValue.map(box => ({ parents: [], childs: [], ...box, sublevel: 0 }));
+        this.modelValue = boxes;
     },
     mounted() {
-
         this.cajaA = this.$refs.cajaA;
         this.cajaB = this.$refs.cajaB;
 
@@ -438,18 +464,16 @@ const svgChart = {
                         parentBox.childs.push(childBox.id);
                     });
             });
-
-            // Obtener subnivel máximo
-            const maxSublevel = Math.max(...boxes.map(box => box.sublevel));
-            //max level
             const maxLevel = Math.max(...boxes.map(box => box.level));
-            //min level
             const minLevel = Math.min(...boxes.map(box => box.level));
 
-            // Actualizar coordenadas x e y
+            const updateX = (boxes) => {
+                const maxX = Math.max(...boxes.map(box => box.x + box.width));
+                return maxX + 40;
+            }
+
             for (let i = minLevel; i <= maxLevel; i++) {
                 let x = 100;
-                let maxX = 0;
                 let levelBoxes = boxes.filter(box => box.level === i);
 
                 let lonelyBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length == 0)
@@ -457,20 +481,17 @@ const svgChart = {
                 let onlyParentBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length > 0)
                 let widthParentAndChildBoxes = levelBoxes.filter(box => box.childs.length > 0 && box.parents.length > 0)
                 console.log('level', i);
-                
+
                 widthParentAndChildBoxes.forEach(box => {
                     box.y = i * 200 + 100;
 
                     let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
                     box.x = parent.x + parent.width / 2 - box.width / 2;
                 });
-                if (widthParentAndChildBoxes.length > 0) {
-                    maxX = Math.max(...levelBoxes.map(box => box.x + box.width));
-                    x = maxX + 40;
-                }
 
-                
-                
+                if (widthParentAndChildBoxes.length > 0) x = updateX(levelBoxes, x);
+
+
 
                 onlyParentBoxes.forEach(box => {
                     box.y = i * 200 + 100;
@@ -478,24 +499,17 @@ const svgChart = {
                     let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
                     box.x = parent.x + parent.width / 2 - box.width / 2;
                 });
-                if (onlyParentBoxes.length > 0) {
-                    maxX = Math.max(...levelBoxes.map(box => box.x + box.width));
-                    x = maxX + 40;
-                }
+                if (onlyParentBoxes.length > 0) x = updateX(levelBoxes, x);
 
 
 
                 onlyChildBoxes.forEach(box => {
                     box.y = i * 200 + 100;
-
                     box.x = x;
                     x += box.width + 40;
                 });
-                if (onlyChildBoxes.length > 0) {
-                    maxX = Math.max(...levelBoxes.map(box => box.x + box.width));
-                    x = maxX + 40;
-                }
-                
+                if (onlyChildBoxes.length > 0) x = updateX(levelBoxes, x);
+
 
 
                 lonelyBoxes.forEach(box => {
@@ -509,16 +523,13 @@ const svgChart = {
             this.$emit("update:modelValue", boxes);
         },
         maxY() {
-            const maxHeight = this.modelValue.reduce((acc, box) => {
-                return acc > box.y + box.height ? acc : box.y + box.height;
-            }, 0);
-            return maxHeight > this.viewHeight ? maxHeight : this.viewHeight;
+
+            const max = Math.max(...this.modelValue.map(box => box.y + box.height))
+            return max > this.viewHeight ? max : this.viewHeight;
         },
         maxX() {
-            const maxWidth = this.modelValue.reduce((acc, box) => {
-                return acc > box.x + box.width ? acc : box.x + box.width;
-            }, 0);
-            return maxWidth > this.viewWidth ? maxWidth : this.viewWidth;
+            const max = Math.max(...this.modelValue.map(box => box.x + box.width))
+            return max > this.viewWidth ? max : this.viewWidth;
         },
         mouseDownEvent(event) {
             if (event.target.id != 'cajaA') return
@@ -539,7 +550,7 @@ const svgChart = {
 
             this.desplazamientoX = Math.min(Math.max(this.desplazamientoX, maxX), 0);
             this.desplazamientoY = Math.min(Math.max(this.desplazamientoY, maxY), 0);
-
+            console.log('mouse')
             this.transform = `translate(${this.desplazamientoX}px, ${this.desplazamientoY}px)`;
         },
         dragOff() {
@@ -550,8 +561,8 @@ const svgChart = {
  <div class="flowchart">
     <div id="cajaB" @mousedown="mouseDownEvent" ref="cajaB" :style="{height: viewHeight + 'px', width: viewWidth + 'px'}">
         <svg @mouseup="dragOff" :style="{transform: transform}" @mouseleave="dragOff" id="cajaA" :width="maxX()" :height="maxY()" @mousemove="mouseMoveEvent" ref="cajaA">
-            <line-chart v-for="rect in modelValue" :key="rect.id" :globalPosition="globalPosition" v-model="rect" :parents="modelValue.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
-            <box-chart v-for="rect in modelValue" :key="rect.id" :globalPosition="globalPosition" v-model="rect" :parents="modelValue.filter(x => Array.isArray(rect.parents) && rect.parents.includes(x.id))" />
+            <line-chart v-for="rect in modelValue" :key="rect.id" :globalPosition="globalPosition" v-model="rect" :mod="modelValue" />
+            <box-chart v-for="rect in modelValue" :key="rect.id" :globalPosition="globalPosition" v-model="rect" />
            
         </svg>
     </div>
@@ -574,7 +585,7 @@ var app = createApp({
         }
     },
     mounted() {
-        fetch('json2.json').then(res => res.json()).then(data => {
+        fetch('courses.json').then(res => res.json()).then(data => {
             this.boxs = data;
         })
     },

@@ -1,0 +1,828 @@
+[
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "3FDD71A4-3182-44E3-2D0B-08D86691CBB5",
+        "text": "INGENIERIA ECONOMICA",
+        "parents": [
+            "42245741-4FEE-C03F-C19C-62A4E883F102"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "1D147441-7F52-4747-2D0C-08D86691CBB5",
+        "text": "REDES NEURONALES Y LOGICA DIFUSA",
+        "parents": [
+            "E033F8A5-A492-B1D0-F9EE-1F04910AFD04"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "F03154AD-93F0-4548-2D0D-08D86691CBB5",
+        "text": "METODOLOGIA DE LA INVESTIGACION",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "00BE3B72-457D-4E67-2D0E-08D86691CBB5",
+        "text": "APLICACIONES MOVILES I",
+        "parents": [
+            "B4865C64-9653-410F-E485-C40685CC1123"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "7C4EB63E-25AC-45CB-2D0F-08D86691CBB5",
+        "text": "SEGURidAD EN REDES",
+        "parents": [
+            "D66F9396-E523-E0BF-1348-07591835AA33"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "3D14069F-42A0-4298-2003-08D866E706B4",
+        "text": "ELECTIVO I: INTELIGENCIA ARTIFICIAL",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "E387FDF9-E63E-45CE-2004-08D866E706B4",
+        "text": "ELECTIVO I: DESARROLLO DE APLICACIONES WEB II",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "ACD9AC95-33D8-422F-2005-08D866E706B4",
+        "text": "ELECTIVO I: COBIT ITIL",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "E1EB86DE-4DF3-4171-987D-08D9042C4B25",
+        "text": "CONTABILidAD COSTOS Y PRESUPUESTOS DE PROYECTOS DE TECNOLOGIAS DE INFORMACION",
+        "parents": [
+            "3FDD71A4-3182-44E3-2D0B-08D86691CBB5"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "C9182361-AFEE-4833-987E-08D9042C4B25",
+        "text": "FORMULACION Y EVALUACION DE PROYECTOS DE TECNOLOGIAS DE INFORMACION",
+        "parents": [
+            "3FDD71A4-3182-44E3-2D0B-08D86691CBB5"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "6B2C8F3B-F643-4E58-987F-08D9042C4B25",
+        "text": "CALidAD APLICADA A LOS SISTEMAS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "F44932E8-D6E6-4459-9880-08D9042C4B25",
+        "text": "LEGISLACION Y DELITOS INFORMATICOS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "7A2FA186-B63A-44E4-9881-08D9042C4B25",
+        "text": "SISTEMAS DISTRIBUidOS",
+        "parents": [
+            "7C4EB63E-25AC-45CB-2D0F-08D86691CBB5"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "A1CE35B0-DF5E-4F9D-9891-08D9042C4B25",
+        "text": "SEMINARIO TALLER DE TESIS I",
+        "parents": [
+            "F03154AD-93F0-4548-2D0D-08D86691CBB5"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "BA17C250-03CB-43A6-E404-08D904E9C6BB",
+        "text": "ELECTIVO II: SISTEMAS EXPERTOS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "2D947368-BFAE-4E2D-E405-08D904E9C6BB",
+        "text": "ELECTIVO II: APLICACIONES MOVILES II",
+        "parents": [
+            "00BE3B72-457D-4E67-2D0E-08D86691CBB5"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "81EBF66C-4252-4A56-E406-08D904E9C6BB",
+        "text": "ELECTIVO II: PROYECTO DE REDES Y TELEPROCESOS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "D7D4E758-2A79-4125-E0A0-08D9712C6C32",
+        "text": "GERENCIA DE TECNOLOGIAS DE INFORMACION",
+        "parents": [
+            "E1EB86DE-4DF3-4171-987D-08D9042C4B25"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "7C234D34-B129-4679-E0A1-08D9712C6C32",
+        "text": "MARKETING Y COMERCIO ELECTRONICO ",
+        "parents": [
+            "C9182361-AFEE-4833-987E-08D9042C4B25"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "0E9ED7C6-1AB4-4774-E0A2-08D9712C6C32",
+        "text": "DEONTOLOGIA PROFESIONAL ",
+        "parents": [
+            "6B2C8F3B-F643-4E58-987F-08D9042C4B25"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "767E5CE3-CB26-46FF-E0A3-08D9712C6C32",
+        "text": "AUDITORIA DE SISTEMAS",
+        "parents": [
+            "F44932E8-D6E6-4459-9880-08D9042C4B25"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "2FEF4D3F-8A10-493F-E0A5-08D9712C6C32",
+        "text": "SEMINARIO TALLER DE TESIS II",
+        "parents": [
+            "A1CE35B0-DF5E-4F9D-9891-08D9042C4B25"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "B44044F4-4511-471A-E0BD-08D9712C6C32",
+        "text": "ELECTIVO III: BASES DE DATOS DOCUMENTALES",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "16EDAA06-64AB-4D51-E0BE-08D9712C6C32",
+        "text": "ELECTIVO III: INTELIGENCIA DE NEGOCIOS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "1CE644CC-39BA-4E2C-E0C0-08D9712C6C32",
+        "text": "ELECTIVO III: ROBOTICA",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 0,
+        "id": "002C94AA-79B1-41B8-37F1-08DABDB24EBD",
+        "text": "PRACTICA PRE PROFESIONAL",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "78F41845-38E6-3A83-CB4D-3A88716C9D5A",
+        "text": "ALGORITMOS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "A7C6F1C3-3F5F-092E-C5A1-482DA2C9B3FF",
+        "text": "BASE DE DATOS II",
+        "parents": [
+            "48A5109A-FB12-E490-3B18-0935ECAEFDE4"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "9E1F7890-67ED-19AA-5318-D1F7B9C0CB3E",
+        "text": "LENGUAJE DE PROGRAMACION ESTRUCTURADO",
+        "parents": [
+            "0D06509B-5CB7-992F-0094-CEB4EC043559"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "BB35FD14-F0D4-1EC7-0B00-280D18C36BA2",
+        "text": "CULTURA DE PAZ Y DEFENSA NACIONAL",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "47593BCB-0166-F98C-20B3-50EA21BEF631",
+        "text": "DISEÑO PARA INGENIERIA",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "BA4F5F78-531A-B8B3-BD65-8691ED9A7C6B",
+        "text": "REDACCION TECNICA Y CIENTIFICA",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "918DD069-62E0-18E6-C9C5-F80468A2A9C2",
+        "text": "ANALISIS Y DISEÑOS DE SISTEMAS II",
+        "parents": [
+            "6410DB3F-55CA-B90C-0A84-DBAD351694DB"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "7757C0E1-F332-CD86-13A9-3CB69AA96D8C",
+        "text": "CIRCUITOS ELECTRONICOS",
+        "parents": [
+            "D73F41BF-ED38-B2F6-2F2C-ED8039BC9F89"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "0D54568D-3A2D-4D74-8CCF-2442A3A93E40",
+        "text": "COMPLEMENTO DE MATEMATICA",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "4F4E8AF2-A3B2-14D3-E61F-C1EAF362051F",
+        "text": "CALCULO III",
+        "parents": [
+            "61D9E49E-D973-56C9-0D8E-8E0C5E1B8A88"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "42245741-4FEE-C03F-C19C-62A4E883F102",
+        "text": "GOBIERNO ELECTRONICO Y DE TECNOLOGIAS DE INFORMACION",
+        "parents": [
+            "37F2F20D-794F-617B-BFF3-28528B0B50A3"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "FEF065BC-BA35-CEA8-5202-39FB7069FA46",
+        "text": "INGLES",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "A249FA6D-E1F9-FBB1-84F2-5E6BB66D8E83",
+        "text": "BIG DATA",
+        "parents": [
+            "A7C6F1C3-3F5F-092E-C5A1-482DA2C9B3FF"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "FC217401-A69B-74ED-E860-4B9201DD2673",
+        "text": "QUIMICA GENERAL",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "78A1B3B4-4920-BAAC-CF94-739807BDF1A9",
+        "text": "CLOUD COMPUTING",
+        "parents": [
+            "246B3355-8464-4183-3CA2-B44E9E5F96D9"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "6410DB3F-55CA-B90C-0A84-DBAD351694DB",
+        "text": "ANALISIS Y DISEÑOS DE SISTEMAS I",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "975FA8CC-950D-16F7-79EE-CBD9B869AD0F",
+        "text": "DESARROLLO DE APLICACIONES WEB I",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "E1556AD0-2D4E-2683-2E0C-269865F6FB9B",
+        "text": "FUNDAMENTOS DE REDES",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "E033F8A5-A492-B1D0-F9EE-1F04910AFD04",
+        "text": "AUTOMATAS Y CONTROL DE PROCESOS",
+        "parents": [
+            "EE3D220D-8E9E-FE93-7817-B9D28703E6D1"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "3AD7EDF5-DBE2-43A4-25E8-002AB087687F",
+        "text": "DINAMICA Y SIMULACION DE SISTEMAS",
+        "parents": [
+            "6EFEA186-5D4C-7DF5-0DA2-EDAC0123AB2B"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "26F151F8-2025-F555-DF79-53B69F545449",
+        "text": "LENGUAJE DE PROGRAMACION ORIENTADA A OBJETOS",
+        "parents": [
+            "9E1F7890-67ED-19AA-5318-D1F7B9C0CB3E"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "3B34286A-B671-21D5-8694-D7D866969520",
+        "text": "SOCIOLOGIA RURAL Y AMAZONICA",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "130362F2-3275-5F5B-709D-A5925AF56C1F",
+        "text": "METODOS NUMERICOS APLICADOS A LA INGENIERIA DE SISTEMAS",
+        "parents": [
+            "4F4E8AF2-A3B2-14D3-E61F-C1EAF362051F"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "99C69C35-BE32-5B24-80FE-E0CCC97A2E86",
+        "text": "INGENIERIA ADMINISTRATIVA",
+        "parents": [
+            "26FFD44D-A239-DAC0-E457-BECA6F6DAE0D"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "D1338340-1DE8-848D-B453-B0DC0AC937C5",
+        "text": "LENGUAJE Y COMUNICACION",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "48932A99-7E61-5482-D218-68283B5C12B3",
+        "text": "ESTRUCTURA DE SISTEMAS OPERATIVOS",
+        "parents": [
+            "EE3D220D-8E9E-FE93-7817-B9D28703E6D1"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "0D06509B-5CB7-992F-0094-CEB4EC043559",
+        "text": "ALGORITMOS Y PROGRAMACION",
+        "parents": [
+            "78F41845-38E6-3A83-CB4D-3A88716C9D5A"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "61D9E49E-D973-56C9-0D8E-8E0C5E1B8A88",
+        "text": "CALCULO II",
+        "parents": [
+            "C720FB50-0125-F500-1EC3-0B6A6460E924"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "37F2F20D-794F-617B-BFF3-28528B0B50A3",
+        "text": "GESTION FINANCIERA Y DE PROCESOS DE NEGOCIO",
+        "parents": [
+            "99C69C35-BE32-5B24-80FE-E0CCC97A2E86"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "246B3355-8464-4183-3CA2-B44E9E5F96D9",
+        "text": "INGENIERIA DE SOFTWARE",
+        "parents": [
+            "918DD069-62E0-18E6-C9C5-F80468A2A9C2"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "C720FB50-0125-F500-1EC3-0B6A6460E924",
+        "text": "CALCULO I",
+        "parents": [
+            "0D54568D-3A2D-4D74-8CCF-2442A3A93E40"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "EE3D220D-8E9E-FE93-7817-B9D28703E6D1",
+        "text": "ARQUITECTURA DEL COMPUTADOR",
+        "parents": [
+            "FF59B657-D6DE-E469-A246-BAB9A8B43BBC"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "B7F038A2-BBDD-9670-444D-64EA0FFF9D3D",
+        "text": "ALGEBRA LINEAL",
+        "parents": [
+            "0D54568D-3A2D-4D74-8CCF-2442A3A93E40"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "A9A63FC9-30D7-2FDE-3EB7-A790407B43F8",
+        "text": "ESTADISTICA GENERAL",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "26FFD44D-A239-DAC0-E457-BECA6F6DAE0D",
+        "text": "ESTADISTICA APLICADA A LA INGENIERIA",
+        "parents": [
+            "A9A63FC9-30D7-2FDE-3EB7-A790407B43F8"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "D66F9396-E523-E0BF-1348-07591835AA33",
+        "text": "ADMINISTRACION DE REDES Y TELECOMUNICACIONES",
+        "parents": [
+            "E1556AD0-2D4E-2683-2E0C-269865F6FB9B"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "1818DA68-43EC-8A77-237B-E39930DB4911",
+        "text": "INTRODUCCION A INGENIERIA DE SISTEMAS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "586AE42D-E12A-A266-2F1D-0156AED8906C",
+        "text": "ECOLOGIA GENERAL Y RECURSOS NATURALES",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "5C3D9195-6391-3BC6-B34A-75B2B109BEE7",
+        "text": "FISICA I",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "0B1192FD-8093-D5D3-36B4-74ABD93AF9B3",
+        "text": "INVESTIGACION DE OPERACIONES APLICADA A LA INGENIERIA",
+        "parents": [
+            "B7F038A2-BBDD-9670-444D-64EA0FFF9D3D"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "9510463F-FF72-E92E-FB33-57D83C7D9FB7",
+        "text": "TEORIA GENERAL DE AUTOMATAS DE PROGRAMACION",
+        "parents": [
+            "26F151F8-2025-F555-DF79-53B69F545449"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "48A5109A-FB12-E490-3B18-0935ECAEFDE4",
+        "text": "BASE DE DATOS I",
+        "parents": [
+            "9E1F7890-67ED-19AA-5318-D1F7B9C0CB3E"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "6EFEA186-5D4C-7DF5-0DA2-EDAC0123AB2B",
+        "text": "TEORIA GENERAL DE SISTEMAS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "8962D8AD-53F7-9153-D1D2-BC652AE6B04A",
+        "text": "ECONOMIA GENERAL",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "0AAD1138-D6D3-A362-91DD-3772200F7502",
+        "text": "ACTIVidADES CULTURALES Y\/O DEPORTIVAS",
+        "parents": []
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "D73F41BF-ED38-B2F6-2F2C-ED8039BC9F89",
+        "text": "FISICA II",
+        "parents": [
+            "5C3D9195-6391-3BC6-B34A-75B2B109BEE7"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "B4865C64-9653-410F-E485-C40685CC1123",
+        "text": "DESARROLLO DE SOLUCIONES DE SOFTWARE LIBRE",
+        "parents": [
+            "975FA8CC-950D-16F7-79EE-CBD9B869AD0F"
+        ]
+    },
+    {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "FF59B657-D6DE-E469-A246-BAB9A8B43BBC",
+        "text": "SISTEMAS DIGITALES",
+        "parents": [
+            "7757C0E1-F332-CD86-13A9-3CB69AA96D8C"
+        ]
+    }
+]
