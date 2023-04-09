@@ -68,9 +68,6 @@ const boxChart = {
             return `translate(${x}, ${y})`;
         }
     },
-    mounted() {
-        console.log(this.modelValue?.text);
-    },
     methods: {
         onDown(e) {
             let x = e.offsetX - this.posX + (this.width / 2);
@@ -406,6 +403,7 @@ const svgChart = {
         this.modelValue.sort((a, b) => {
             return (a.width * a.height) < (b.width * b.height) ? 1 : -1;
         })
+
     },
     mounted() {
 
@@ -428,35 +426,83 @@ const svgChart = {
     methods: {
         smartOrganizer() {
             // Clonar modelValue y agregar sublevel
-            const boxes = this.modelValue.map(box => ({ ...box, sublevel: 0 }));
+            const boxes = this.modelValue.map(box => ({ parents: [], childs: [], ...box, sublevel: 0 }));
+            console.log(boxes);
 
             // Calcular subniveles
             boxes.forEach(parentBox => {
                 boxes
-                    .filter(childBox => childBox?.parents?.includes(parentBox.id))
+                    .filter(childBox => childBox.parents.includes(parentBox.id))
                     .forEach(childBox => {
                         childBox.sublevel = parentBox.sublevel + 1;
+                        parentBox.childs.push(childBox.id);
                     });
             });
 
             // Obtener subnivel máximo
             const maxSublevel = Math.max(...boxes.map(box => box.sublevel));
+            //max level
+            const maxLevel = Math.max(...boxes.map(box => box.level));
+            //min level
+            const minLevel = Math.min(...boxes.map(box => box.level));
 
             // Actualizar coordenadas x e y
-            for (let i = 0; i <= maxSublevel; i++) {
+            for (let i = minLevel; i <= maxLevel; i++) {
                 let x = 100;
-                boxes
-                    .filter(box => box.sublevel === i)
-                    .forEach(box => {
-                        box.y = i * 200 + 100;
-                        if (i === 0) {
-                            box.x = x;
-                            x += box.width + 40;
-                        } else {
-                            const parent = boxes.find(parentBox => parentBox.id === box.parents[0]);
-                            box.x = parent.x + parent.width / 2 - box.width / 2;
-                        }
-                    });
+                let maxX = 0;
+                let levelBoxes = boxes.filter(box => box.level === i);
+
+                let lonelyBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length == 0)
+                let onlyChildBoxes = levelBoxes.filter(box => box.childs.length > 0 && box.parents.length == 0)
+                let onlyParentBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length > 0)
+                let widthParentAndChildBoxes = levelBoxes.filter(box => box.childs.length > 0 && box.parents.length > 0)
+                console.log('level', i);
+                
+                widthParentAndChildBoxes.forEach(box => {
+                    box.y = i * 200 + 100;
+
+                    let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
+                    box.x = parent.x + parent.width / 2 - box.width / 2;
+                });
+                if (widthParentAndChildBoxes.length > 0) {
+                    maxX = Math.max(...levelBoxes.map(box => box.x + box.width));
+                    x = maxX + 40;
+                }
+
+                
+                
+
+                onlyParentBoxes.forEach(box => {
+                    box.y = i * 200 + 100;
+
+                    let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
+                    box.x = parent.x + parent.width / 2 - box.width / 2;
+                });
+                if (onlyParentBoxes.length > 0) {
+                    maxX = Math.max(...levelBoxes.map(box => box.x + box.width));
+                    x = maxX + 40;
+                }
+
+
+
+                onlyChildBoxes.forEach(box => {
+                    box.y = i * 200 + 100;
+
+                    box.x = x;
+                    x += box.width + 40;
+                });
+                if (onlyChildBoxes.length > 0) {
+                    maxX = Math.max(...levelBoxes.map(box => box.x + box.width));
+                    x = maxX + 40;
+                }
+                
+
+
+                lonelyBoxes.forEach(box => {
+                    box.y = i * 200 + 100;
+                    box.x = x;
+                    x += box.width + 40;
+                });
             }
 
             // Emitir evento de actualización

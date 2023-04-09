@@ -189,6 +189,18 @@
         "level": 2
     },
     {
+        "x": 52,
+        "y": 52,
+        "width": 150,
+        "height": 96,
+        "text": "Desarrollo Sostenible",
+        "id": 22,
+        "parents": [
+            16
+        ],
+        "level": 3
+    },
+    {
         "x": 4,
         "y": 4,
         "width": 150,
@@ -221,18 +233,6 @@
         "id": 21,
         "parents": [
             15
-        ],
-        "level": 3
-    },
-    {
-        "x": 52,
-        "y": 52,
-        "width": 150,
-        "height": 96,
-        "text": "Desarrollo Sostenible",
-        "id": 22,
-        "parents": [
-            16
         ],
         "level": 3
     }
