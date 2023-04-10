@@ -205,15 +205,15 @@ const lineChart = {
                 let finalPoints = [];
                 let isStartA = true;
                 let isEndA = true;
-                const parentHeight = parent.height;
-                const parentWidth = parent.width;
+                const parentHeight = parent?.height ?? 0;
+                const parentWidth = parent?.width ?? 0;
                 const childHeight = this.height;
                 const childWidth = this.width;
 
                 const endX = this.posX;
                 const endY = this.posY;
-                const startX = parent.x;
-                const startY = parent.y;
+                const startX = parent?.x ?? 0;
+                const startY = parent?.y ?? 0;
 
                 const lineStartA = [[startX + (parentWidth / 2), startY], [startX + (parentWidth / 2) + gap, startY]];
                 const lineEndA = [[endX - (childWidth / 2) - gap, endY], [endX - (childWidth / 2), endY]];
@@ -413,16 +413,25 @@ const svgChart = {
             counter: 0,
         }
     },
+    watch: {
+        modelValue: {
+            handler(val) {
+                this.normalize();
+            },
+            deep: true
+        }
+    },
     beforeMount() {
         this.modelValue.sort((a, b) => {
             return (a.width * a.height) < (b.width * b.height) ? 1 : -1;
         })
-        const boxes = this.modelValue.map(box => ({ parents: [], childs: [], ...box, sublevel: 0 }));
-        this.modelValue = boxes;
+        this.normalize();
     },
     mounted() {
         this.cajaA = this.$refs.cajaA;
         this.cajaB = this.$refs.cajaB;
+        this.normalize();
+
 
         const resizeObserver = new ResizeObserver(entries => {
             for (let entry of entries) {
@@ -438,10 +447,34 @@ const svgChart = {
         }, 200);
     },
     methods: {
-        smartOrganizer2() {
-            // Clonar modelValue y agregar sublevel
-            const boxes = this.modelValue.map(box => ({ parents: [], childs: [], ...box, sublevel: 0, room: -1 }));
+        normalize() {
+            let error = false;
+            for (let index = 0; index < this.modelValue.length; index++) {
+                const box = this.modelValue[index];
 
+                if (
+                    !Array.isArray(box?.parents) ||
+                    !Array.isArray(box?.childs) ||
+                    !Array.isArray(box?.sisters) ||
+                    box.room == undefined ||
+                    box.x == undefined ||
+                    box.y == undefined ||
+                    box.width == undefined ||
+                    box.height == undefined
+                ) {
+                    error = true;
+                    console.warn('Error in the data model, it will be corrected');
+                    break;
+                }
+            }
+            if (error) {
+                const boxes = this.modelValue.map(box => ({ parents: [], childs: [], sublevel: 0, room: -1, sisters: [], x: 0, y: 0, ...box }));
+                this.$emit('update:modelValue', boxes);
+            }
+        },
+        smartOrganizer() {
+            // Clonar modelValue y agregar sublevel
+            const boxes = this.modelValue.map(box => ({ parents: [], childs: [], sublevel: 0, room: -1, sisters: [], x: 0, y: 0, ...box }));
 
             // Calcular subniveles
             boxes.forEach(parentBox => {
@@ -452,6 +485,25 @@ const svgChart = {
                         parentBox.childs.push(childBox.id);
                     });
             });
+            boxes.forEach(box => {
+                box.sisters = box.parents.map(parentId => {
+                    let parent = boxes.find(parentBox => parentBox.id === parentId);
+                    return parent.childs.filter(childId => childId !== box.id);
+                }).flat();
+            });
+            //order by id
+            boxes.sort((a, b) => a.sisters.length > b.sisters.length ? 1 : -1);
+            boxes.sort((a, b) => a.id > b.id ? 1 : -1);
+            boxes.forEach(box => {
+                //order chidren by id
+                box.childs.sort((a, b) => a > b ? 1 : -1)
+                //order sisters by id
+                box.sisters.sort((a, b) => a > b ? 1 : -1)
+                //order parents by id
+                box.parents.sort((a, b) => a > b ? 1 : -1)
+            });
+
+
             const maxLevel = Math.max(...boxes.map(box => box.level));
             const minLevel = Math.min(...boxes.map(box => box.level));
 
@@ -459,62 +511,132 @@ const svgChart = {
                 const maxX = Math.max(...boxes.map(box => box.x + box.width));
                 return maxX + 40;
             }
+            let buildedBoxes = {};
 
             for (let i = minLevel; i <= maxLevel; i++) {
-                let room = 0;
-                let x = 100;
-                let levelBoxes = boxes.filter(box => box.level === i);
+                
+                let levelBoxes = boxes.filter(box => box.level === i)//.sort((a, b) => a.sisters.length > b.sisters.length ? 1 : -1);
 
                 let lonelyBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length == 0)
                 let onlyHaveChildBoxes = levelBoxes.filter(box => box.childs.length > 0 && box.parents.length == 0)
                 let onlyHaveParentBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length > 0)
                 let widthParentAndChildBoxes = levelBoxes.filter(box => box.childs.length > 0 && box.parents.length > 0)
+
+                buildedBoxes[i] = []
                 console.log('level', i);
 
                 widthParentAndChildBoxes.forEach(box => {
-                    box.y = i * 200 + 100;
-
                     let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
-                    box.x = parent.x + parent.width / 2 - box.width / 2;
-                });
 
-                if (widthParentAndChildBoxes.length > 0) x = updateX(levelBoxes, x);
+                    let f = 0;
+                    let test = undefined
+                    do {
+                        test = buildedBoxes[i][parent.room + f]
+                        f++
+                    }
+                    while (box.sisters.includes(test?.id) && test != undefined)
+                    f--;
+
+                    if(f > 0){
+                        let indexes = Object.keys(buildedBoxes)
+                        for (let q = 0; q < indexes.length; q++) {
+                            let z = indexes[q]
+                            for (let g = buildedBoxes[z].length - 1; g >= parent.room + f; g--) {
+                                if (buildedBoxes[z][g] != undefined) {
+    
+                                    let temp = buildedBoxes[z][g];
+                                    temp.room = g + f;
+                                    buildedBoxes[z][g + f] = temp;
+                                    buildedBoxes[z][g] = undefined;
+    
+    
+                                }
+                            }
+                        }
+                    }
+                    buildedBoxes[i][parent.room + f] = box;
+                    box.room = parent.room + f;
+
+                });
 
 
 
                 onlyHaveParentBoxes.forEach(box => {
-                    box.y = i * 200 + 100;
 
                     let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
-                    box.x = parent.x + parent.width / 2 - box.width / 2;
+
+                    let f = 0;
+                    let test = undefined
+                    do {
+                        test = buildedBoxes[i][parent.room + f]
+                        f++
+                    }
+                    while (box.sisters.includes(test?.id) && test != undefined)
+                    f--;
+
+                    if(f > 0){
+                        let indexes = Object.keys(buildedBoxes)
+                        for (let q = 0; q < indexes.length; q++) {
+                            let z = indexes[q]
+                            for (let g = buildedBoxes[z].length - 1; g >= parent.room + f; g--) {
+                                if (buildedBoxes[z][g] != undefined) {
+    
+                                    let temp = buildedBoxes[z][g];
+                                    temp.room = g + f;
+                                    buildedBoxes[z][g + f] = temp;
+                                    buildedBoxes[z][g] = undefined;
+    
+    
+                                }
+                            }
+                        }
+                    }
+                    buildedBoxes[i][parent.room + f] = box;
+                    box.room = parent.room + f;
+
+
                 });
-                if (onlyHaveParentBoxes.length > 0) x = updateX(levelBoxes, x);
 
 
 
                 onlyHaveChildBoxes.forEach(box => {
-                    box.y = i * 200 + 100;
-                    box.x = x;
-                    x += box.width + 40;
-                    console.log('box', box.text);
+                    if (i == 2) {
+                        console.log('box', box?.text);
+                    }
+                    buildedBoxes[i].push(box);
+                    box.room = buildedBoxes[i].length - 1;
                 });
-                if (onlyHaveChildBoxes.length > 0) x = updateX(levelBoxes, x);
 
 
 
                 lonelyBoxes.forEach(box => {
-                    box.y = i * 200 + 100;
-                    box.x = x;
-                    x += box.width + 40;
+                    buildedBoxes[i].push(box);
+                    box.room = buildedBoxes[i].length - 1;
                 });
             }
+
+            //foreach buildedBoxes
+            for (let i = minLevel; i <= maxLevel; i++) {
+                for (let e = 0; e < buildedBoxes[i].length; e++) {
+                    let box = buildedBoxes[i][e];
+                    if (box != undefined || box != null) {
+                        box.y = i * 200 + 100;
+                        box.x = e * 250 + 140;
+                    }
+                }
+            }
+            /*
+                        boxes.forEach(box => {
+                            box.y = box.level * 200 + 100;
+                            box.x = box.room * 200 + 100;
+                        });*/
 
             // Emitir evento de actualización
             this.$emit("update:modelValue", boxes);
         },
-        smartOrganizer() {
+        smartOrganizer2() {
             // Clonar modelValue y agregar sublevel
-            const boxes = this.modelValue.map(box => ({ parents: [], childs: [], ...box, sublevel: 0, room: -1, sisters: [] }));
+            const boxes = this.modelValue.map(box => ({ parents: [], childs: [], sublevel: 0, room: -1, sisters: [], x: 0, y: 0, ...box }));
 
             // Calcular subniveles
             boxes.forEach(parentBox => {
@@ -568,14 +690,35 @@ const svgChart = {
                 widthParentAndChildBoxes.forEach(box => {
                     let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
                     const index = parent.childs.findIndex(x => x === box.id);
-                    let anItem = buildedBoxes[i][parent.room]
 
-                    if (anItem != undefined && anItem != null) {
-                        buildedBoxes[i].push(anItem);
-                        anItem.room = buildedBoxes[i].length - 1;
+                    if (i == 2) {
+                        for (let f = 0; f < 20; f++) {
+                            let test = buildedBoxes[i][parent.room + f]
+                            console.log('test', test);
+
+                            if (test == undefined || test == null) break;
+                            console.log('test index', f);
+                        }
                     }
-                    buildedBoxes[i][parent.room] = box;
-                    box.room = parent.room;
+
+
+                    let anItem = buildedBoxes[i][parent.room]
+                    if (i == 2) {
+                        console.log('anItem', anItem);
+                    }
+                    if (box.sisters.includes(anItem?.id)) {
+                        buildedBoxes[i].push(box);
+                        box.room = buildedBoxes[i].length - 1;
+                    }
+                    else {
+
+                        if (anItem != undefined && anItem != null) {
+                            buildedBoxes[i].push(anItem);
+                            anItem.room = buildedBoxes[i].length - 1;
+                        }
+                        buildedBoxes[i][parent.room] = box;
+                        box.room = parent.room;
+                    }
 
                 });
 
@@ -586,22 +729,21 @@ const svgChart = {
                     const index = parent.childs.findIndex(x => x === box.id);
                     let anItem = buildedBoxes[i][parent.room]
 
-                    if (i == 1) {
-                        /*console.table(box.sisters);
-                        console.table('current', box.text, box.id);
-                        console.table('parent', parent.text, parent.id);
 
-                        console.table('anItem', anItem.text);
-                        console.log('parent room', parent.room);*/
+
+                    if (box.sisters.includes(anItem?.id)) {
+                        buildedBoxes[i].push(box);
+                        box.room = buildedBoxes[i].length - 1;
                     }
+                    else {
 
-
-                    if (anItem != undefined && anItem != null) {
-                        buildedBoxes[i].push(anItem);
-                        anItem.room = buildedBoxes[i].length - 1;
+                        if (anItem != undefined && anItem != null) {
+                            buildedBoxes[i].push(anItem);
+                            anItem.room = buildedBoxes[i].length - 1;
+                        }
+                        buildedBoxes[i][parent.room] = box;
+                        box.room = parent.room;
                     }
-                    buildedBoxes[i][parent.room] = box;
-                    box.room = parent.room;
 
                     //box.room = buildedBoxes[i].length - 1;
 
@@ -628,10 +770,7 @@ const svgChart = {
                     let box = buildedBoxes[i][e];
                     if (box != undefined || box != null) {
                         box.y = i * 200 + 100;
-                        box.x = e * 250 + 100;
-                    }
-                    if (box?.text == "PRACTICA PRE PROFESIONAL") {
-                        console.table(box);
+                        box.x = e * 250 + 140;
                     }
                 }
             }
@@ -708,7 +847,11 @@ var app = createApp({
     },
     mounted() {
         fetch('courses.json').then(res => res.json()).then(data => {
+            const caja = this.$refs.box
+
             this.boxs = data;
+
+
         })
     },
     watch: {
