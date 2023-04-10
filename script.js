@@ -514,7 +514,7 @@ const svgChart = {
             let buildedBoxes = {};
 
             for (let i = minLevel; i <= maxLevel; i++) {
-                
+
                 let levelBoxes = boxes.filter(box => box.level === i)//.sort((a, b) => a.sisters.length > b.sisters.length ? 1 : -1);
 
                 let lonelyBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length == 0)
@@ -537,19 +537,19 @@ const svgChart = {
                     while (box.sisters.includes(test?.id) && test != undefined)
                     f--;
 
-                    if(f > 0){
+                    if (f > 0) {
                         let indexes = Object.keys(buildedBoxes)
                         for (let q = 0; q < indexes.length; q++) {
                             let z = indexes[q]
                             for (let g = buildedBoxes[z].length - 1; g >= parent.room + f; g--) {
                                 if (buildedBoxes[z][g] != undefined) {
-    
+
                                     let temp = buildedBoxes[z][g];
                                     temp.room = g + f;
                                     buildedBoxes[z][g + f] = temp;
                                     buildedBoxes[z][g] = undefined;
-    
-    
+
+
                                 }
                             }
                         }
@@ -574,19 +574,19 @@ const svgChart = {
                     while (box.sisters.includes(test?.id) && test != undefined)
                     f--;
 
-                    if(f > 0){
+                    if (f > 0) {
                         let indexes = Object.keys(buildedBoxes)
                         for (let q = 0; q < indexes.length; q++) {
                             let z = indexes[q]
                             for (let g = buildedBoxes[z].length - 1; g >= parent.room + f; g--) {
                                 if (buildedBoxes[z][g] != undefined) {
-    
+
                                     let temp = buildedBoxes[z][g];
                                     temp.room = g + f;
                                     buildedBoxes[z][g + f] = temp;
                                     buildedBoxes[z][g] = undefined;
-    
-    
+
+
                                 }
                             }
                         }
@@ -614,9 +614,35 @@ const svgChart = {
                     box.room = buildedBoxes[i].length - 1;
                 });
             }
+            //tratar de reacomodar los boxes
+            let indexes = Object.keys(buildedBoxes)
 
-            //foreach buildedBoxes
-            for (let i = minLevel; i <= maxLevel; i++) {
+            for (let f = 0; f < indexes.length; f++) {
+                let i = indexes[f]
+                for (let e = 0; e < buildedBoxes[i].length; e++) {
+                    let box = buildedBoxes[i][e];
+                    if (box != undefined && box.parents.length == 0 && box.childs.length == 0) {
+                        //console.table(box)
+                        for (let g = 0; g < e; g++) {
+                            const selected = buildedBoxes[i][g]
+                            //console.log('selected', selected?.text, 'para', box?.text);
+                            if (selected == undefined) {
+                                box.room = g;
+                                buildedBoxes[i][g] = box;
+                                console.log('box', box?.text, 'se movio a', g);
+                                buildedBoxes[i][e] = undefined;
+                                break;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+
+            for (let f = 0; f < indexes.length; f++) {
+                let i = indexes[f]
                 for (let e = 0; e < buildedBoxes[i].length; e++) {
                     let box = buildedBoxes[i][e];
                     if (box != undefined || box != null) {
@@ -625,11 +651,6 @@ const svgChart = {
                     }
                 }
             }
-            /*
-                        boxes.forEach(box => {
-                            box.y = box.level * 200 + 100;
-                            box.x = box.room * 200 + 100;
-                        });*/
 
             // Emitir evento de actualización
             this.$emit("update:modelValue", boxes);
