@@ -408,7 +408,7 @@ const svgChart = {
                 x: 0,
                 y: 0
             },
-            viewHeight: 500,
+            viewHeight: 1000,
             viewWidth: 600,
             counter: 0,
         }
@@ -655,155 +655,6 @@ const svgChart = {
             // Emitir evento de actualización
             this.$emit("update:modelValue", boxes);
         },
-        smartOrganizer2() {
-            // Clonar modelValue y agregar sublevel
-            const boxes = this.modelValue.map(box => ({ parents: [], childs: [], sublevel: 0, room: -1, sisters: [], x: 0, y: 0, ...box }));
-
-            // Calcular subniveles
-            boxes.forEach(parentBox => {
-                boxes
-                    .filter(childBox => childBox.parents.includes(parentBox.id))
-                    .forEach(childBox => {
-                        childBox.sublevel = parentBox.sublevel + 1;
-                        parentBox.childs.push(childBox.id);
-                    });
-            });
-            boxes.forEach(box => {
-                box.sisters = box.parents.map(parentId => {
-                    let parent = boxes.find(parentBox => parentBox.id === parentId);
-                    return parent.childs.filter(childId => childId !== box.id);
-                }).flat();
-            });
-            //order by id
-            boxes.sort((a, b) => a.sisters.length > b.sisters.length ? 1 : -1);
-            boxes.sort((a, b) => a.id > b.id ? 1 : -1);
-            boxes.forEach(box => {
-                //order chidren by id
-                box.childs.sort((a, b) => a > b ? 1 : -1)
-                //order sisters by id
-                box.sisters.sort((a, b) => a > b ? 1 : -1)
-                //order parents by id
-                box.parents.sort((a, b) => a > b ? 1 : -1)
-            });
-
-
-            const maxLevel = Math.max(...boxes.map(box => box.level));
-            const minLevel = Math.min(...boxes.map(box => box.level));
-
-            const updateX = (boxes) => {
-                const maxX = Math.max(...boxes.map(box => box.x + box.width));
-                return maxX + 40;
-            }
-            let buildedBoxes = {};
-
-            for (let i = minLevel; i <= maxLevel; i++) {
-                let room = 0;
-                let levelBoxes = boxes.filter(box => box.level === i)//.sort((a, b) => a.sisters.length > b.sisters.length ? 1 : -1);
-
-                let lonelyBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length == 0)
-                let onlyHaveChildBoxes = levelBoxes.filter(box => box.childs.length > 0 && box.parents.length == 0)
-                let onlyHaveParentBoxes = levelBoxes.filter(box => box.childs.length == 0 && box.parents.length > 0)
-                let widthParentAndChildBoxes = levelBoxes.filter(box => box.childs.length > 0 && box.parents.length > 0)
-
-                buildedBoxes[i] = []
-                console.log('level', i);
-
-                widthParentAndChildBoxes.forEach(box => {
-                    let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
-                    const index = parent.childs.findIndex(x => x === box.id);
-
-                    if (i == 2) {
-                        for (let f = 0; f < 20; f++) {
-                            let test = buildedBoxes[i][parent.room + f]
-                            console.log('test', test);
-
-                            if (test == undefined || test == null) break;
-                            console.log('test index', f);
-                        }
-                    }
-
-
-                    let anItem = buildedBoxes[i][parent.room]
-                    if (i == 2) {
-                        console.log('anItem', anItem);
-                    }
-                    if (box.sisters.includes(anItem?.id)) {
-                        buildedBoxes[i].push(box);
-                        box.room = buildedBoxes[i].length - 1;
-                    }
-                    else {
-
-                        if (anItem != undefined && anItem != null) {
-                            buildedBoxes[i].push(anItem);
-                            anItem.room = buildedBoxes[i].length - 1;
-                        }
-                        buildedBoxes[i][parent.room] = box;
-                        box.room = parent.room;
-                    }
-
-                });
-
-
-
-                onlyHaveParentBoxes.forEach(box => {
-                    let parent = boxes.find(parentBox => box.parents.length > 0 && parentBox.id === box.parents[0])
-                    const index = parent.childs.findIndex(x => x === box.id);
-                    let anItem = buildedBoxes[i][parent.room]
-
-
-
-                    if (box.sisters.includes(anItem?.id)) {
-                        buildedBoxes[i].push(box);
-                        box.room = buildedBoxes[i].length - 1;
-                    }
-                    else {
-
-                        if (anItem != undefined && anItem != null) {
-                            buildedBoxes[i].push(anItem);
-                            anItem.room = buildedBoxes[i].length - 1;
-                        }
-                        buildedBoxes[i][parent.room] = box;
-                        box.room = parent.room;
-                    }
-
-                    //box.room = buildedBoxes[i].length - 1;
-
-                });
-
-
-
-                onlyHaveChildBoxes.forEach(box => {
-                    buildedBoxes[i].push(box);
-                    box.room = buildedBoxes[i].length - 1;
-                });
-
-
-
-                lonelyBoxes.forEach(box => {
-                    buildedBoxes[i].push(box);
-                    box.room = buildedBoxes[i].length - 1;
-                });
-            }
-
-            //foreach buildedBoxes
-            for (let i = minLevel; i <= maxLevel; i++) {
-                for (let e = 0; e < buildedBoxes[i].length; e++) {
-                    let box = buildedBoxes[i][e];
-                    if (box != undefined || box != null) {
-                        box.y = i * 200 + 100;
-                        box.x = e * 250 + 140;
-                    }
-                }
-            }
-            /*
-                        boxes.forEach(box => {
-                            box.y = box.level * 200 + 100;
-                            box.x = box.room * 200 + 100;
-                        });*/
-
-            // Emitir evento de actualización
-            this.$emit("update:modelValue", boxes);
-        },
         maxY() {
 
             const max = Math.max(...this.modelValue.map(box => box.y + box.height))
@@ -867,7 +718,8 @@ var app = createApp({
         }
     },
     mounted() {
-        fetch('courses.json').then(res => res.json()).then(data => {
+        fetch('test.json').then(res => res.json()).then(data => {
+            console.log(data);
             const caja = this.$refs.box
 
             this.boxs = data;

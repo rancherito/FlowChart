@@ -1,0 +1,402 @@
+[
+    {
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "F7EB420A-8883-841B-99E0-1C52BE3CBA8E",
+        "text": "REDACCION TECNICA Y CIENTIFICA",
+        "parents": ["33750E47-4FF3-7B1D-9A57-E4EC496E7B98"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "E041B5FE-FFC2-0C4B-951C-E0A6291EBA2B",
+        "text": "ENFERMERIA DEL ADULTO Y EL ADULTO MAYOR II",
+        "parents": ["B08078FB-382F-FB6D-8CF2-7E41F980F5E7"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "1DD91BEF-BD5D-4E89-7DB6-08D86682EE45",
+        "text": "INVESTIGACION EN ENFERMERIA III",
+        "parents": ["CDD9DDD1-D9E7-C4EE-EC79-C9D8BAA4B6D7"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "0F9EDA12-E800-4C0F-7DB7-08D86682EE45",
+        "text": "GESTION DE LOS SERVICIOS DE ENFERMERIA HOSPITALARIA Y COMUNITARIA",
+        "parents": ["E041B5FE-FFC2-0C4B-951C-E0A6291EBA2B"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "360E6250-730D-4E91-7DB8-08D86682EE45",
+        "text": "ENFERMERIA DE LA SALUD FAMILIAR Y COMUNITARIA III",
+        "parents": ["16EF14E5-85DC-29DD-FDD1-92C4E77F2919"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "E09FA959-23EC-4640-7DB9-08D86682EE45",
+        "text": "ELECTIVO III: EMPRENDEDURISMO EN ENFERMERIA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 8,
+        "id": "D55589B5-F6B1-4DA1-7DBA-08D86682EE45",
+        "text": "ELECTIVO III: ENFERMERIA DEL PRE ESCOLAR Y ESCOLAR",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 9,
+        "id": "63BF6A0D-6E33-4A62-BC0B-08D9050D2B15",
+        "text": "INTERNADO CLINICO ",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 10,
+        "id": "2EF5B41F-857F-4D8F-2B5E-08D9741E0E60",
+        "text": "INTERNADO RURAL",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "1A5AD9E4-F417-3E40-75CE-AA40C6AD2DB3",
+        "text": "EPidEMIOLOGIA",
+        "parents": ["27066FC3-6351-8BC4-A8B9-97C6165F1D6A"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "7A3A565A-7C0D-57A1-7476-CF589A3BD932",
+        "text": "INVESTIGACIÓN EN ENFERMERIA I",
+        "parents": ["1A5AD9E4-F417-3E40-75CE-AA40C6AD2DB3"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "70BDA6F6-DE19-2AEB-943C-A3FB6DBBEA66",
+        "text": "BIOQUIMICA",
+        "parents": ["FBB2F48F-E6DB-4CD3-1A1D-7BE3295BE76D"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "6A38FA4E-EE2F-B2CA-BDE0-25CA472923BD",
+        "text": "ECONOMIA GENERAL",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "33750E47-4FF3-7B1D-9A57-E4EC496E7B98",
+        "text": "LENGUAJE Y COMUNICACION",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "8251CDC7-D67B-E0D2-19DB-E05A9B6DD55C",
+        "text": "SOCIOLOGIA RURAL Y AMAZONICA",
+        "parents": ["7D618C22-37FB-68A8-104B-54C4606E684C"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "A9CBEDA2-1850-B74B-D11A-064945782ED8",
+        "text": "INTRODUCCION A LA ENFERMERIA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "2CAD352B-0E8E-B663-EF07-51ABA743BCB2",
+        "text": "NUTRICION Y DIETOTERAPIA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "7D618C22-37FB-68A8-104B-54C4606E684C",
+        "text": "CULTURA DE PAZ Y SEGURidAD NACIONAL",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "27066FC3-6351-8BC4-A8B9-97C6165F1D6A",
+        "text": "BIOESTADISTICA",
+        "parents": ["6B57B247-1034-1F17-2047-A257B9BD8687"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "CE5AC249-29D3-60B7-E392-ACF74C02BB61",
+        "text": "FISIOLOGIA HUMANA",
+        "parents": ["48592E6B-DF81-2963-917C-5D70103A9768"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "6E07E277-BF7B-C5E8-20D5-4F637BF7852E",
+        "text": "SEMIOLOGIA HUMANA",
+        "parents": ["E4031752-6A4A-0E98-F1CC-321EEEFD2D78"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "74BD1AF6-04C4-F525-AD14-34D571F54DBF",
+        "text": "ENFERMERIA EN SALUD MENTAL Y PSIQUIATRIA",
+        "parents": ["991DE678-7FE9-A979-2BD9-A40DC5DDE297"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "3D508482-84A1-6584-9306-86BD1EF81969",
+        "text": "CALCULO",
+        "parents": ["7A9984DE-4FEC-EB6A-94E3-B82550D07A59"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "1F416B85-C1A9-BB4A-8CB9-A78D3ABD3CBC",
+        "text": "FARMACOLOGIA CLINICA Y TERAPEUTICA",
+        "parents": ["70BDA6F6-DE19-2AEB-943C-A3FB6DBBEA66"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "B08078FB-382F-FB6D-8CF2-7E41F980F5E7",
+        "text": "ENFERMERIA DEL ADULTO Y ADULTO MAYOR I",
+        "parents": ["13B62B78-8527-734F-42F4-D56D6C87B03F"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "13B62B78-8527-734F-42F4-D56D6C87B03F",
+        "text": "ENFERMERIA MATERNO INFANTIL",
+        "parents": ["86025455-A2C7-DA29-5B12-ADCCBFEDBF10"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "4D3EE6C6-CB93-2476-BC27-D4E13286D73B",
+        "text": "ENFERMERIA EN SALUD FAMILIAR Y COMUNITARIA I",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "16517F6D-7BD3-4FF1-88AC-4EAF2E8BF92E",
+        "text": "BIOLOGIA",
+        "parents": ["95D71D24-0760-4710-6CE5-BC02B72951BC"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "9EBFEF65-7D9F-BD08-E409-893C04F52701",
+        "text": "ACTIVidAD CULTURAL Y DEPORTE",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "8473566D-A22A-8EC9-6DE0-D98DFE38282D",
+        "text": "ELECTIVO I: URGENCIAS Y SUPERVIVENCIA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "B1C12E24-08C4-D0E3-684A-EC34FA7E7F9C",
+        "text": "EPISTEMOLOGIA DE LA ENFERMERIA",
+        "parents": ["8251CDC7-D67B-E0D2-19DB-E05A9B6DD55C"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 2,
+        "id": "217080E7-D7D0-3EF8-FC7C-10DD185B12E8",
+        "text": "TECNOLOGIA DEL CUidADO I",
+        "parents": ["A9CBEDA2-1850-B74B-D11A-064945782ED8"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "86025455-A2C7-DA29-5B12-ADCCBFEDBF10",
+        "text": "SALUD DE LA MUJER",
+        "parents": ["91B12165-E127-35F2-063D-A8B4768C9410"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "7A9984DE-4FEC-EB6A-94E3-B82550D07A59",
+        "text": "COMPLEMENTO DE MATEMATICA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "95D71D24-0760-4710-6CE5-BC02B72951BC",
+        "text": "ECOLOGIA  GENERAL Y RECURSOS NATURALES",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "91B12165-E127-35F2-063D-A8B4768C9410",
+        "text": "TECNOLOGIA DEL CUidADO II",
+        "parents": ["217080E7-D7D0-3EF8-FC7C-10DD185B12E8"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "941A8803-E312-4671-03C6-80992A49AEE7",
+        "text": "ELECTIVO II: LEGISLACION EN SALUD",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "991DE678-7FE9-A979-2BD9-A40DC5DDE297",
+        "text": "EDUCACION EN ENFERMERIA",
+        "parents": ["F7FD3728-420A-941B-9063-96608750840E"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "CDD9DDD1-D9E7-C4EE-EC79-C9D8BAA4B6D7",
+        "text": "INVESTIGACION EN ENFERMERIA II",
+        "parents": ["7A3A565A-7C0D-57A1-7476-CF589A3BD932"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 1,
+        "id": "FBB2F48F-E6DB-4CD3-1A1D-7BE3295BE76D",
+        "text": "QUIMICA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "16EF14E5-85DC-29DD-FDD1-92C4E77F2919",
+        "text": "ENFERMERIA EN SALUD FAMILIAR Y COMUNITARIA II",
+        "parents": ["4D3EE6C6-CB93-2476-BC27-D4E13286D73B"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 7,
+        "id": "B5988A85-738C-B2BB-47AA-39F5BEECC8B3",
+        "text": "ELECTIVO II: SEGURidAD Y SALUD EN EL TRABAJO",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "381F9848-A14B-30A2-35B7-64DB9403BCDA",
+        "text": "INGLES TECNICO",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "48592E6B-DF81-2963-917C-5D70103A9768",
+        "text": "ANATOMIA HUMANA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 4,
+        "id": "778CB4AD-8A17-8172-361D-C5FB4BAF9F6F",
+        "text": "ETICA Y DEONTOLOGIA",
+        "parents": ["B1C12E24-08C4-D0E3-684A-EC34FA7E7F9C"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 6,
+        "id": "079A4D37-7A89-CA0C-EB54-E3C3C8B45420",
+        "text": "ELECTIVO I: PROCESO DEL CUidADO DE ENFERMERIA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "4769020B-94D5-8875-1C45-37D4614AB3A8",
+        "text": "FISICA",
+        "parents": []
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "6B57B247-1034-1F17-2047-A257B9BD8687",
+        "text": "ESTADISTICA",
+        "parents": ["3D508482-84A1-6584-9306-86BD1EF81969"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 3,
+        "id": "E4031752-6A4A-0E98-F1CC-321EEEFD2D78",
+        "text": "MICROBIOLOGIA Y PARASITOLOGIA HUMANA",
+        "parents": ["16517F6D-7BD3-4FF1-88AC-4EAF2E8BF92E"]
+    },
+    {
+        "width": 200,
+        "height": 70,
+        "level": 5,
+        "id": "F7FD3728-420A-941B-9063-96608750840E",
+        "text": "ENFERMERIA DEL NIÑO Y EL ADOLESCENTE",
+        "parents": ["6E07E277-BF7B-C5E8-20D5-4F637BF7852E"]
+    }
+]
